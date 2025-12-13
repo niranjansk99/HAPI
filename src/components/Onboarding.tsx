@@ -3,8 +3,9 @@ import { WelcomeScreen } from './onboarding/WelcomeScreen';
 import { GoalScreen } from './onboarding/GoalScreen';
 import { ExperienceScreen } from './onboarding/ExperienceScreen';
 import { DailyGoalScreen } from './onboarding/DailyGoalScreen';
-import { ReminderScreen } from './onboarding/ReminderScreen';
-import { ReadyScreen } from './onboarding/ReadyScreen';
+//import { ReminderScreen } from './onboarding/ReminderScreen';
+//import { ReadyScreen } from './onboarding/ReadyScreen';
+import { MoodScreen } from "./onboarding/MoodScreen";
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -16,10 +17,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     goal: '',
     experience: '',
     dailyGoal: '',
-    reminderTime: ''
+    reminderTime: '',
+    mood: 50,
   });
 
-  const updateUserData = (key: string, value: string) => {
+  const updateUserData = (key: string, value: any) => {
     setUserData({ ...userData, [key]: value });
   };
 
@@ -42,23 +44,23 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <GoalScreen key="goal" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <ExperienceScreen key="experience" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <DailyGoalScreen key="daily" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
-    <ReminderScreen key="reminder" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
-    <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
+    <MoodScreen key="mood" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />, // ✅ added
+    //<ReminderScreen key="reminder" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
+    //<ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50">
       {screens[currentStep]}
-      
+
       {/* Progress Indicator */}
       <div className="fixed bottom-8 left-0 right-0 px-6">
         <div className="max-w-md mx-auto flex gap-2">
           {[...Array(6)].map((_, index) => (
             <div
               key={index}
-              className={`h-1 flex-1 rounded-full transition-all ${
-                index <= currentStep ? 'bg-green-500' : 'bg-gray-300'
-              }`}
+              className={`h-1 flex-1 rounded-full transition-all ${index <= currentStep ? 'bg-green-500' : 'bg-gray-300'
+                }`}
             />
           ))}
         </div>

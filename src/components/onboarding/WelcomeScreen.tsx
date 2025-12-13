@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from 'lucide-react';
+import jumpingVideo from '../../assets/Jumping-vmake.mov';
 
 interface WelcomeScreenProps {
   onNext: () => void;
@@ -11,16 +12,23 @@ export function WelcomeScreen({ onNext }: WelcomeScreenProps) {
       <motion.div
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 200, 
+        transition={{
+          type: "spring",
+          stiffness: 200,
           damping: 20,
-          duration: 0.8 
+          duration: 0.8
         }}
         className="mb-8"
       >
-        <div className="w-32 h-32 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-2xl">
-          <span className="text-7xl"></span>
+        <div className="w-60 h-60">
+          <video
+            src={jumpingVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full  pointer-events-none"
+          />
         </div>
       </motion.div>
 
@@ -31,10 +39,14 @@ export function WelcomeScreen({ onNext }: WelcomeScreenProps) {
         className="text-center mb-12"
       >
         <h1 className="mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-          Welcome to LearnLingo
+          Welcome to HAPI
         </h1>
         <p className="text-gray-600 text-lg max-w-sm mx-auto">
-          The fun, effective way to learn a new language!
+          You don’t have to have it all figured out
+          <br />
+          <br />
+          <br />
+          Many people feel lost at some point in their life. You’re not behind. You’re human.
         </p>
       </motion.div>
 
@@ -44,22 +56,6 @@ export function WelcomeScreen({ onNext }: WelcomeScreenProps) {
         transition={{ delay: 0.6 }}
         className="space-y-6 mb-12 max-w-sm"
       >
-        {[
-          { emoji: '🎯', text: 'Personalized learning path' },
-          { emoji: '🏆', text: 'Track your progress' },
-          { emoji: '⚡', text: 'Quick, bite-sized lessons' }
-        ].map((item, index) => (
-          <motion.div
-            key={item.text}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 + index * 0.15 }}
-            className="flex items-center gap-4 bg-white rounded-2xl p-4 shadow-md"
-          >
-            <div className="text-4xl">{item.emoji}</div>
-            <span className="text-gray-700">{item.text}</span>
-          </motion.div>
-        ))}
       </motion.div>
 
       <motion.button

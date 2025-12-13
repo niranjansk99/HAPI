@@ -40,18 +40,18 @@ export function LandingPage({ onStart }: LandingPageProps) {
                     >
                         <div className="inline-flex items-center space-x-2 bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-medium">
                             <span className="flex h-2 w-2 rounded-full bg-indigo-600"></span>
-                            <span>The #1 Habit Learning App</span>
+                            <span>Unleash your goal!</span>
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 leading-tight">
-                            Master New Skills <br />
+                            Master pivoting your life <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-600">
                                 In Minutes
                             </span>
                         </h1>
 
                         <p className="text-xl text-gray-600 max-w-lg">
-                            Gamified lessons that stick. Join over 100,000 learners mastering coding, design, and languages the fun way.
+                            Gamified journey that stick. Join over 100,000 learners mastering pivoting your life the fun way.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4">
@@ -61,17 +61,17 @@ export function LandingPage({ onStart }: LandingPageProps) {
                                 onClick={onStart}
                                 className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-bold text-lg shadow-xl shadow-indigo-200 flex items-center justify-center gap-2 group"
                             >
-                                Start Learning Now
+                                Start the Journey Now
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </motion.button>
 
-                            <motion.button
+                            {/*<motion.button
                                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
                                 whileTap={{ scale: 0.95 }}
                                 className="px-8 py-4 bg-white text-gray-700 rounded-2xl font-bold text-lg shadow-lg shadow-gray-100 flex items-center justify-center gap-2"
                             >
                                 View Demo
-                            </motion.button>
+                            </motion.button>*/}
                         </div>
 
                         <div className="flex items-center gap-4 pt-4">
