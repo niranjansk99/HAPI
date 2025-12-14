@@ -18,12 +18,12 @@ interface LessonsProps {
 
 export function Lessons({ onNavigate, userStats, setUserStats, navigateToLesson }: LessonsProps) {
   const lessons = [
-    { id: 1, title: 'Basics 1', status: 'completed', stars: 3, color: 'from-green-400 to-green-500', emoji: '👋' },
-    { id: 2, title: 'Basics 2', status: 'completed', stars: 3, color: 'from-blue-400 to-blue-500', emoji: '✨' },
-    { id: 3, title: 'Greetings', status: 'completed', stars: 2, color: 'from-purple-400 to-purple-500', emoji: '👋' },
-    { id: 4, title: 'Numbers', status: 'active', stars: 0, color: 'from-yellow-400 to-orange-500', emoji: '🔢' },
-    { id: 5, title: 'Food', status: 'locked', stars: 0, color: 'from-pink-400 to-red-500', emoji: '🍕' },
-    { id: 6, title: 'Travel', status: 'locked', stars: 0, color: 'from-indigo-400 to-purple-500', emoji: '✈️' }
+    { id: 1, title: 'Self I', status: 'completed', stars: 3, color: 'from-green-400 to-green-500', emoji: '🌱' },
+    { id: 2, title: 'Self II', status: 'completed', stars: 3, color: 'from-blue-400 to-blue-500', emoji: '✨' },
+    { id: 3, title: 'Connection', status: 'completed', stars: 2, color: 'from-purple-400 to-purple-500', emoji: '🤝' },
+    { id: 4, title: 'Values', status: 'active', stars: 0, color: 'from-yellow-400 to-orange-500', emoji: '🧭' },
+    { id: 5, title: 'Nourishment', status: 'locked', stars: 0, color: 'from-pink-400 to-red-500', emoji: '🍎' },
+    { id: 6, title: 'Exploration', status: 'locked', stars: 0, color: 'from-indigo-400 to-purple-500', emoji: '🔭' }
   ];
 
   const handleLessonClick = (lesson: any) => {
@@ -39,8 +39,8 @@ export function Lessons({ onNavigate, userStats, setUserStats, navigateToLesson 
           animate={{ opacity: 1, y: 0 }}
           className="text-center text-white"
         >
-          <h1 className="mb-2">Learning Path</h1>
-          <p className="text-blue-100">Complete lessons to level up!</p>
+          <h1 className="mb-2">Your Path</h1>
+          <p className="text-blue-100">Explore insights to grow!</p>
         </motion.div>
       </div>
 
@@ -66,8 +66,8 @@ export function Lessons({ onNavigate, userStats, setUserStats, navigateToLesson 
                   whileHover={lesson.status !== 'locked' ? { scale: 1.05 } : {}}
                   whileTap={lesson.status !== 'locked' ? { scale: 0.95 } : {}}
                   className={`w-full rounded-3xl p-6 shadow-lg transition-all ${lesson.status === 'locked'
-                      ? 'bg-gray-300'
-                      : `bg-gradient-to-br ${lesson.color}`
+                    ? 'bg-gray-300'
+                    : `bg-gradient-to-br ${lesson.color}`
                     }`}
                 >
                   <div className="flex items-center justify-between">
@@ -89,15 +89,15 @@ export function Lessons({ onNavigate, userStats, setUserStats, navigateToLesson 
                               <Star
                                 key={i}
                                 className={`w-4 h-4 ${i < lesson.stars
-                                    ? 'fill-yellow-300 text-yellow-300'
-                                    : 'text-white/50'
+                                  ? 'fill-yellow-300 text-yellow-300'
+                                  : 'text-white/50'
                                   }`}
                               />
                             ))}
                           </div>
                         )}
                         {lesson.status === 'active' && (
-                          <div className="text-sm text-white/80">Start lesson</div>
+                          <div className="text-sm text-white/80">Begin exploration</div>
                         )}
                       </div>
                     </div>

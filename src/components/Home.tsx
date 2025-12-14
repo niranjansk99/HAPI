@@ -23,8 +23,8 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           className="flex items-center justify-between mb-6"
         >
           <div>
-            <h2 className="text-white text-2xl mb-1">Hello, Learner! 👋</h2>
-            <p className="text-green-100">Keep up the great work!</p>
+            <h2 className="text-white text-2xl mb-1">Hello, Explorer! 👋</h2>
+            <p className="text-green-100">Your journey unfolds.</p>
           </div>
           <motion.button
             onClick={() => onNavigate('profile')}
@@ -38,9 +38,9 @@ export function Home({ onNavigate, userStats }: HomeProps) {
 
         <div className="grid grid-cols-3 gap-3">
           {[
-            { icon: Flame, value: userStats.streak, label: 'Day Streak', color: 'from-orange-400 to-red-500', page: 'progress' },
-            { icon: Zap, value: userStats.points, label: 'XP', color: 'from-yellow-400 to-orange-400', page: 'progress' },
-            { icon: Trophy, value: userStats.level, label: 'Level', color: 'from-purple-400 to-pink-500', page: 'leaderboard' }
+            { icon: Flame, value: userStats.streak, label: 'Days of Clarity', color: 'from-orange-400 to-red-500', page: 'progress' },
+            { icon: Zap, value: userStats.points, label: 'Questions', color: 'from-yellow-400 to-orange-400', page: 'progress' },
+            { icon: Trophy, value: userStats.level, label: 'Stage', color: 'from-purple-400 to-pink-500', page: 'leaderboard' }
           ].map((stat, index) => (
             <motion.button
               key={stat.label}
@@ -71,7 +71,7 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           transition={{ delay: 0.3 }}
           className="mb-6"
         >
-          <h3 className="text-gray-800 mb-2">Daily Goal</h3>
+          <h3 className="text-gray-800 mb-2">Daily Reflection</h3>
           <motion.button
             onClick={() => onNavigate('daily-challenge')}
             whileHover={{ scale: 1.02 }}
@@ -79,7 +79,7 @@ export function Home({ onNavigate, userStats }: HomeProps) {
             className="w-full bg-white rounded-2xl p-4 shadow-sm"
           >
             <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-600">15 minutes a day</span>
+              <span className="text-gray-600">15 minutes of focus</span>
               <span className="text-green-600">8/15 min</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
@@ -102,10 +102,10 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           <h3 className="text-gray-800 mb-4">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { icon: Target, label: 'Daily Challenge', color: 'from-red-400 to-pink-500', page: 'daily-challenge' },
-              { icon: Users, label: 'Leaderboard', color: 'from-blue-400 to-purple-500', page: 'leaderboard' },
-              { icon: Gift, label: 'Shop', color: 'from-yellow-400 to-orange-500', page: 'shop' },
-              { icon: Star, label: 'Achievements', color: 'from-green-400 to-teal-500', page: 'achievements' }
+              { icon: Target, label: 'Daily Spark', color: 'from-red-400 to-pink-500', page: 'daily-challenge' },
+              { icon: Users, label: 'Shared Journey', color: 'from-blue-400 to-purple-500', page: 'leaderboard' },
+              { icon: Gift, label: 'Toolbox', color: 'from-yellow-400 to-orange-500', page: 'shop' },
+              { icon: Star, label: 'Milestones', color: 'from-green-400 to-teal-500', page: 'achievements' }
             ].map((action, index) => (
               <motion.button
                 key={action.label}
@@ -129,7 +129,7 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <h3 className="text-gray-800 mb-4">Continue Learning</h3>
+          <h3 className="text-gray-800 mb-4">Continue Journey</h3>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -151,8 +151,8 @@ export function Home({ onNavigate, userStats }: HomeProps) {
                 <span className="text-4xl">📚</span>
               </motion.div>
               <div className="text-left">
-                <div className="mb-1">Lesson 24</div>
-                <div className="text-sm text-green-100">Basic Phrases</div>
+                <div className="mb-1">Insight 24</div>
+                <div className="text-sm text-green-100">Self Awareness</div>
               </div>
             </div>
             <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -166,7 +166,7 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           className="mt-6"
         >
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-gray-800">Achievements</h3>
+            <h3 className="text-gray-800">Milestones</h3>
             <motion.button
               onClick={() => onNavigate('achievements')}
               whileHover={{ scale: 1.05 }}
@@ -178,10 +178,10 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           </div>
           <div className="grid grid-cols-4 gap-3">
             {[
-              { emoji: '🔥', unlocked: true, label: 'Fire' },
-              { emoji: '⭐', unlocked: true, label: 'Star' },
-              { emoji: '💎', unlocked: true, label: 'Diamond' },
-              { emoji: '🏆', unlocked: false, label: 'Trophy' }
+              { emoji: '🔥', unlocked: true, label: 'Consistency' },
+              { emoji: '⭐', unlocked: true, label: 'Dedication' },
+              { emoji: '💎', unlocked: true, label: 'Growth' },
+              { emoji: '🏆', unlocked: false, label: 'Mastery' }
             ].map((achievement, index) => (
               <motion.button
                 key={achievement.label}
@@ -192,8 +192,8 @@ export function Home({ onNavigate, userStats }: HomeProps) {
                 whileHover={{ scale: achievement.unlocked ? 1.1 : 1 }}
                 whileTap={{ scale: achievement.unlocked ? 0.95 : 1 }}
                 className={`aspect-square rounded-2xl flex items-center justify-center text-4xl ${achievement.unlocked
-                    ? 'bg-gradient-to-br from-yellow-400 to-orange-400 shadow-md'
-                    : 'bg-gray-200'
+                  ? 'bg-gradient-to-br from-yellow-400 to-orange-400 shadow-md'
+                  : 'bg-gray-200'
                   }`}
               >
                 <span className={achievement.unlocked ? '' : 'opacity-30'}>

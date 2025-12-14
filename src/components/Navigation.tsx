@@ -9,10 +9,10 @@ interface NavigationProps {
 export function Navigation({ currentPage, onNavigate }: NavigationProps) {
   const navItems = [
     { id: 'home', icon: Home, label: 'Home' },
-    { id: 'lessons', icon: BookOpen, label: 'Learn' },
-    { id: 'progress', icon: TrendingUp, label: 'Progress' },
+    { id: 'lessons', icon: BookOpen, label: 'Path' },
+    { id: 'progress', icon: TrendingUp, label: 'Growth' },
     { id: 'journey', icon: MapIcon, label: 'Journey' },
-    { id: 'profile', icon: User, label: 'Profile' }
+    { id: 'profile', icon: User, label: 'You' }
   ];
 
   return (

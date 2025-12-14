@@ -40,18 +40,18 @@ export function LandingPage({ onStart }: LandingPageProps) {
                     >
                         <div className="inline-flex items-center space-x-2 bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-medium">
                             <span className="flex h-2 w-2 rounded-full bg-indigo-600"></span>
-                            <span>Unleash your goal!</span>
+                            <span>Find your path</span>
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 leading-tight">
-                            Master pivoting your life <br />
+                            Discover your true path <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-600">
-                                In Minutes
+                                In Moments
                             </span>
                         </h1>
 
                         <p className="text-xl text-gray-600 max-w-lg">
-                            Gamified journey that stick. Join over 100,000 learners mastering pivoting your life the fun way.
+                            A supportive journey that grows with you. Join over 100,000 explorers mastering pivoting your life the fun way.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4">
@@ -90,7 +90,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
                                     <Star className="w-4 h-4 fill-current" />
                                     <Star className="w-4 h-4 fill-current" />
                                 </div>
-                                <p className="text-sm text-gray-500 font-medium">Loved by 10k+ students</p>
+                                <p className="text-sm text-gray-500 font-medium">Loved by 10k+ explorers</p>
                             </div>
                         </div>
                     </motion.div>
@@ -122,7 +122,7 @@ export function LandingPage({ onStart }: LandingPageProps) {
                                         <div className="h-full bg-indigo-500 w-3/4 rounded-full"></div>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Lesson 4/5</span>
+                                        <span className="text-gray-600">Insight 4/5</span>
                                         <span className="font-bold text-indigo-600">80%</span>
                                     </div>
                                 </div>
@@ -131,13 +131,13 @@ export function LandingPage({ onStart }: LandingPageProps) {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-purple-50 p-4 rounded-2xl">
                                     <Heart className="w-8 h-8 text-purple-500 mb-2" />
-                                    <div className="font-bold text-gray-800">Health</div>
-                                    <div className="text-xs text-gray-500">12 Lessons</div>
+                                    <div className="font-bold text-gray-800">Wellness</div>
+                                    <div className="text-xs text-gray-500">12 Insights</div>
                                 </div>
                                 <div className="bg-green-50 p-4 rounded-2xl">
                                     <Shield className="w-8 h-8 text-green-500 mb-2" />
-                                    <div className="font-bold text-gray-800">Logic</div>
-                                    <div className="text-xs text-gray-500">8 Lessons</div>
+                                    <div className="font-bold text-gray-800">Mindset</div>
+                                    <div className="text-xs text-gray-500">8 Insights</div>
                                 </div>
                             </div>
                         </div>
@@ -147,9 +147,9 @@ export function LandingPage({ onStart }: LandingPageProps) {
                 {/* Features Grid */}
                 <div className="mt-32 grid md:grid-cols-3 gap-8">
                     {[
-                        { title: "Gamified Learning", icon: Zap, color: "text-yellow-500", bg: "bg-yellow-50", desc: "Earn points, badges, and compete with friends." },
-                        { title: "Expert Content", icon: Star, color: "text-purple-500", bg: "bg-purple-50", desc: "Lessons crafted by industry leaders and experts." },
-                        { title: "Community Driven", icon: Users, color: "text-pink-500", bg: "bg-pink-50", desc: "Join thousands of learners on the same journey." },
+                        { title: "Engaging Journey", icon: Zap, color: "text-yellow-500", bg: "bg-yellow-50", desc: "Earn sparks, milestones, and grow with friends." },
+                        { title: "Guided Insights", icon: Star, color: "text-purple-500", bg: "bg-purple-50", desc: "Insights crafted by industry leaders and experts." },
+                        { title: "Shared Support", icon: Users, color: "text-pink-500", bg: "bg-pink-50", desc: "Join thousands of explorers on the same journey." },
                     ].map((feature, idx) => (
                         <motion.div
                             key={idx}
