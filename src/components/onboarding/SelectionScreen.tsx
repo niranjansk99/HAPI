@@ -61,14 +61,14 @@ export function SelectionScreen({
         : Boolean(selectedValues);
 
     return (
-        <div className="min-h-screen flex flex-col px-6 py-12">
+        <div className="min-h-screen flex flex-col px-6 py-12 relative">
             <motion.button
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onBack}
-                className="self-start mb-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md"
+                className="absolute top-12 left-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md z-10"
             >
                 <ArrowLeft className="w-5 h-5 text-gray-600" />
             </motion.button>
@@ -127,15 +127,15 @@ export function SelectionScreen({
                                 )}
                                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${selected ? 'bg-white/20' : 'bg-gray-100'
                                     }`}>
-                                    <option.icon className={`w-7 h-7 ${selected ? 'text-white' : 'text-gray-600'
+                                    <option.icon className={`w-7 h-7 ${selected ? 'text-black' : 'text-gray-600'
                                         }`} />
                                 </div>
                                 <div className="flex-1 text-left">
-                                    <div className={`mb-1 ${selected ? 'text-white' : 'text-gray-800'
+                                    <div className={`mb-1 ${selected ? 'text-black font-medium' : 'text-gray-800'
                                         }`}>
                                         {option.label}
                                     </div>
-                                    <div className={`text-sm ${selected ? 'text-white/80' : 'text-gray-500'
+                                    <div className={`text-sm ${selected ? 'text-black/70' : 'text-gray-500'
                                         }`}>
                                         {option.desc}
                                     </div>
