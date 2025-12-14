@@ -219,7 +219,6 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     "Giving something to others",
     "Having direction, even if small",
     "I’m not sure yet",
-    "I’m not sure yet",
   ].map(opt => ({
     id: opt,
     label: opt,
