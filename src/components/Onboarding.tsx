@@ -48,13 +48,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       if (userData.shareObservationConsent === true) {
         setCurrentStep(16); // Go to SequenceScreen (Yes path)
       } else {
-        setCurrentStep(17); // Go to SelectionScreen (No path)
+        setCurrentStep(17); // Go to SelectionScreen (No path / Screen 19)
       }
       return;
     }
 
     if (currentStep === 16) { // SequenceScreen (Index 16)
-      setCurrentStep(18); // Skip to ReadyScreen
+      setCurrentStep(18); // Skip SelectionScreen, go to Screen 20
       return;
     }
 
@@ -70,14 +70,14 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
 
   const prevStep = () => {
-    if (currentStep === 18 && userData.shareObservationConsent === true) {
-      setCurrentStep(16); // Go back to SequenceScreen if coming from Yes path
-      return;
-    }
-
-    if (currentStep === 18 && userData.shareObservationConsent === false) {
-      setCurrentStep(17); // Go back to SelectionScreen if coming from No path
-      return;
+    // Merging Point Back Logic (Screen 19 is at index 17)
+    if (currentStep === 17) {
+      // If we are on Screen 19 and consent is false (No path), we skip SequenceScreen (16) and go back to 15
+      if (userData.shareObservationConsent === false) {
+        setCurrentStep(15);
+        return;
+      }
+      // If consent is true (Yes path), default behavior (17 -> 16) is correct
     }
 
     if (currentStep > 0) {
@@ -419,7 +419,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       icon="🌱"
       headline="You don’t need clarity to move forward. You only need honesty — and you’re already doing that."
     />,
-    // 15 (Branching Point)
+    // 15 (Branching Point - Screen 17)
     <SelectionScreen
       key="screen-17"
       onNext={nextStep}
@@ -434,7 +434,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('shareObservationConsent', val === "true")}
       topIcon="💬"
     />,
-    // 16 (Yes Path)
+    // 16 (Yes Path - Screen 18 Yes)
     <SequenceScreen
       key="screen-18-yes"
       onNext={nextStep}
@@ -443,9 +443,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       headline="Something I noticed"
       bullets={screen18YesBullets}
     />,
-    // 17 (No Path)
+    // 17 (No Path - Screen 19)
     <SelectionScreen
-      key="screen-18-no"
+      key="screen-19"
       onNext={nextStep}
       onBack={prevStep}
       headline="I won’t tell you who you are. But I can help you notice patterns — if you want."
@@ -456,7 +456,24 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       topIcon="🧭"
     />,
 
-    // 18 (End)
+    // 18 (Screen 20 - Merged)
+    <InformationScreen
+      key="screen-20"
+      onNext={nextStep}
+      icon="🧭"
+      headline="Most people don’t have one single purpose. They have a direction — a range where things feel right."
+    />,
+
+    // 19 (Screen 24)
+    <InformationScreen
+      key="screen-24"
+      onNext={nextStep}
+      icon="👣"
+      headline="This is not about finding answers. It’s about trying things."
+      subline="Small actions create clarity. You don’t need motivation — just one step."
+    />,
+
+    // 20 (End)
     <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
   ];
 
@@ -469,7 +486,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       {/* Progress Indicator */}
       <div className="fixed bottom-8 left-0 right-0 px-6">
         <div className="max-w-md mx-auto flex gap-2">
-          {[...Array(screens.length)].map((_, index) => (
+          {screens.map((_, index) => (
+            // Don't show progress for hidden path steps if we aren't on them
+            // Simplified: just show all dots
             <div
               key={index}
               className={`h-1 flex-1 rounded-full transition-all ${index <= currentStep ? 'bg-green-500' : 'bg-gray-300'
