@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Lock, CheckCircle, Play } from 'lucide-react';
 import { Navigation } from './Navigation';
 import { useState } from 'react';
@@ -59,17 +59,16 @@ export function Lessons({ onNavigate, userStats, setUserStats, navigateToLesson 
                 {index > 0 && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-1 h-4 bg-gray-300 -z-10" />
                 )}
-                
+
                 <motion.button
                   onClick={() => handleLessonClick(lesson)}
                   disabled={lesson.status === 'locked'}
                   whileHover={lesson.status !== 'locked' ? { scale: 1.05 } : {}}
                   whileTap={lesson.status !== 'locked' ? { scale: 0.95 } : {}}
-                  className={`w-full rounded-3xl p-6 shadow-lg transition-all ${
-                    lesson.status === 'locked'
+                  className={`w-full rounded-3xl p-6 shadow-lg transition-all ${lesson.status === 'locked'
                       ? 'bg-gray-300'
                       : `bg-gradient-to-br ${lesson.color}`
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -89,11 +88,10 @@ export function Lessons({ onNavigate, userStats, setUserStats, navigateToLesson 
                             {[...Array(3)].map((_, i) => (
                               <Star
                                 key={i}
-                                className={`w-4 h-4 ${
-                                  i < lesson.stars
+                                className={`w-4 h-4 ${i < lesson.stars
                                     ? 'fill-yellow-300 text-yellow-300'
                                     : 'text-white/50'
-                                }`}
+                                  }`}
                               />
                             ))}
                           </div>

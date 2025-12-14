@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Bell, Volume2, Globe, Moon, Lock, HelpCircle, Info, LogOut } from 'lucide-react';
 import { useState } from 'react';
 
@@ -80,9 +80,8 @@ export function SettingsPage({ onNavigate }: SettingsPageProps) {
                       {item.type === 'toggle' && (
                         <button
                           onClick={() => item.onChange && item.onChange(!item.value)}
-                          className={`w-14 h-8 rounded-full transition-colors relative ${
-                            item.value ? 'bg-green-500' : 'bg-gray-300'
-                          }`}
+                          className={`w-14 h-8 rounded-full transition-colors relative ${item.value ? 'bg-green-500' : 'bg-gray-300'
+                            }`}
                         >
                           <motion.div
                             animate={{ x: item.value ? 24 : 2 }}

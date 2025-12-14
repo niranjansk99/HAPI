@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Target, Clock, Trophy, Zap } from 'lucide-react';
 
 interface DailyChallengeProps {
@@ -156,7 +156,7 @@ export function DailyChallenge({ onNavigate, userStats, setUserStats }: DailyCha
                       <span>{Math.round((challenge.progress / challenge.total) * 100)}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                      <div 
+                      <div
                         className={`bg-gradient-to-r ${challenge.color} h-full rounded-full`}
                         style={{ width: `${(challenge.progress / challenge.total) * 100}%` }}
                       />

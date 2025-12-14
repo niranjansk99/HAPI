@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Gem, Shield, Zap, Star, Heart, Crown } from 'lucide-react';
 import { useState } from 'react';
 
@@ -119,9 +119,8 @@ export function Shop({ onNavigate, userStats, setUserStats }: ShopProps) {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handlePurchase(item)}
                 disabled={userStats.gems < item.price}
-                className={`w-full bg-gradient-to-br ${item.color} rounded-3xl p-5 shadow-lg flex flex-col items-center text-white ${
-                  userStats.gems < item.price ? 'opacity-50' : ''
-                }`}
+                className={`w-full bg-gradient-to-br ${item.color} rounded-3xl p-5 shadow-lg flex flex-col items-center text-white ${userStats.gems < item.price ? 'opacity-50' : ''
+                  }`}
               >
                 <div className="text-5xl mb-3">{item.emoji}</div>
                 <h3 className="text-sm mb-2 text-center">{item.name}</h3>

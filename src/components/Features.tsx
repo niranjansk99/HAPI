@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Star, Shield, Rocket, Users, Palette, Globe } from 'lucide-react';
 import { Navigation } from './Navigation';
 
@@ -49,7 +49,7 @@ export function Features({ onNavigate }: FeaturesProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation currentPage="features" onNavigate={onNavigate} />
-      
+
       <main className="flex-1 px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

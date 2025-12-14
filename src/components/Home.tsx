@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Flame, Zap, Trophy, ArrowRight, Star, Gift, Target, Users } from 'lucide-react';
 import { Navigation } from './Navigation';
 
@@ -138,10 +138,10 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           >
             <div className="flex items-center gap-4">
               <motion.div
-                animate={{ 
+                animate={{
                   rotate: [0, -10, 10, -10, 0],
                 }}
-                transition={{ 
+                transition={{
                   duration: 2,
                   repeat: Infinity,
                   repeatDelay: 3
@@ -191,11 +191,10 @@ export function Home({ onNavigate, userStats }: HomeProps) {
                 transition={{ delay: 0.6 + index * 0.1, type: "spring", stiffness: 200 }}
                 whileHover={{ scale: achievement.unlocked ? 1.1 : 1 }}
                 whileTap={{ scale: achievement.unlocked ? 0.95 : 1 }}
-                className={`aspect-square rounded-2xl flex items-center justify-center text-4xl ${
-                  achievement.unlocked 
-                    ? 'bg-gradient-to-br from-yellow-400 to-orange-400 shadow-md' 
+                className={`aspect-square rounded-2xl flex items-center justify-center text-4xl ${achievement.unlocked
+                    ? 'bg-gradient-to-br from-yellow-400 to-orange-400 shadow-md'
                     : 'bg-gray-200'
-                }`}
+                  }`}
               >
                 <span className={achievement.unlocked ? '' : 'opacity-30'}>
                   {achievement.emoji}

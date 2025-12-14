@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Send } from 'lucide-react';
 import { Navigation } from './Navigation';
 import { useState } from 'react';
@@ -27,7 +27,7 @@ export function Contact({ onNavigate }: ContactProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation currentPage="contact" onNavigate={onNavigate} />
-      
+
       <main className="flex-1 px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

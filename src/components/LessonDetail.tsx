@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Star, Zap, Heart } from 'lucide-react';
 import { useState } from 'react';
 
@@ -39,10 +39,10 @@ export function LessonDetail({ onNavigate, lesson, userStats, setUserStats }: Le
 
   const handleAnswer = (index: number) => {
     setSelectedAnswer(index);
-    
+
     setTimeout(() => {
       const isCorrect = index === questions[currentQuestion].correct;
-      
+
       if (isCorrect) {
         setScore(score + 1);
       } else {
@@ -87,16 +87,15 @@ export function LessonDetail({ onNavigate, lesson, userStats, setUserStats }: Le
           <p className="text-gray-600 mb-6">
             You got {score} out of {questions.length} correct
           </p>
-          
+
           <div className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-2xl p-4 mb-6">
             <div className="text-white text-4xl mb-2">+{score * 20 + 30} XP</div>
             <div className="flex justify-center gap-1">
               {[...Array(3)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-6 h-6 ${
-                    i < score ? 'fill-white text-white' : 'text-white/40'
-                  }`}
+                  className={`w-6 h-6 ${i < score ? 'fill-white text-white' : 'text-white/40'
+                    }`}
                 />
               ))}
             </div>
@@ -127,7 +126,7 @@ export function LessonDetail({ onNavigate, lesson, userStats, setUserStats }: Le
           >
             <ArrowLeft className="w-6 h-6 text-white" />
           </motion.button>
-          
+
           <div className="flex gap-2">
             {[...Array(lives)].map((_, i) => (
               <motion.div
@@ -194,25 +193,23 @@ export function LessonDetail({ onNavigate, lesson, userStats, setUserStats }: Le
                     whileTap={!showFeedback ? { scale: 0.98 } : {}}
                     onClick={() => !showFeedback && handleAnswer(index)}
                     disabled={showFeedback}
-                    className={`w-full p-4 rounded-2xl border-2 transition-all ${
-                      showFeedback
+                    className={`w-full p-4 rounded-2xl border-2 transition-all ${showFeedback
                         ? isCorrect
                           ? 'bg-green-100 border-green-500'
                           : isSelected
-                          ? 'bg-red-100 border-red-500'
-                          : 'bg-white border-gray-200'
+                            ? 'bg-red-100 border-red-500'
+                            : 'bg-white border-gray-200'
                         : 'bg-white border-gray-200 hover:border-green-400'
-                    }`}
+                      }`}
                   >
-                    <span className={`${
-                      showFeedback
+                    <span className={`${showFeedback
                         ? isCorrect
                           ? 'text-green-700'
                           : isSelected
-                          ? 'text-red-700'
-                          : 'text-gray-600'
+                            ? 'text-red-700'
+                            : 'text-gray-600'
                         : 'text-gray-700'
-                    }`}>
+                      }`}>
                       {answer}
                     </span>
                   </motion.button>

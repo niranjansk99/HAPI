@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { TrendingUp, Calendar, Award, Zap } from 'lucide-react';
 import { Navigation } from './Navigation';
 
@@ -85,7 +85,7 @@ export function Progress({ onNavigate, userStats }: ProgressProps) {
               <p className="text-gray-600">Keep the streak going!</p>
             </div>
           </div>
-          
+
           <div className="flex justify-between items-end h-40 gap-2">
             {weeklyActivity.map((day, index) => (
               <div key={day.day} className="flex-1 flex flex-col items-center gap-2">
@@ -93,11 +93,10 @@ export function Progress({ onNavigate, userStats }: ProgressProps) {
                   initial={{ height: 0 }}
                   animate={{ height: day.xp > 0 ? `${(day.xp / maxXp) * 100}%` : '8px' }}
                   transition={{ delay: 0.3 + index * 0.1, type: "spring", stiffness: 100 }}
-                  className={`w-full rounded-lg ${
-                    day.completed
+                  className={`w-full rounded-lg ${day.completed
                       ? 'bg-gradient-to-t from-green-400 to-green-500'
                       : 'bg-gray-200'
-                  } min-h-2 relative group`}
+                    } min-h-2 relative group`}
                 >
                   {day.xp > 0 && (
                     <motion.div
@@ -123,7 +122,7 @@ export function Progress({ onNavigate, userStats }: ProgressProps) {
           className="space-y-4"
         >
           <h3 className="text-gray-800">Statistics</h3>
-          
+
           {[
             { icon: Zap, label: 'Total XP Earned', value: userStats.points, color: 'from-yellow-400 to-orange-400' },
             { icon: Award, label: 'Lessons Completed', value: userStats.completedLessons, color: 'from-blue-400 to-purple-400' }

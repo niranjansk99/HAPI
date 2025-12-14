@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Home, BookOpen, TrendingUp, User } from 'lucide-react';
 
 interface NavigationProps {
@@ -38,15 +38,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                 transition={{ duration: 0.3 }}
               >
                 <item.icon
-                  className={`w-6 h-6 relative z-10 transition-colors ${
-                    isActive ? 'text-green-600' : 'text-gray-400'
-                  }`}
+                  className={`w-6 h-6 relative z-10 transition-colors ${isActive ? 'text-green-600' : 'text-gray-400'
+                    }`}
                 />
               </motion.div>
               <span
-                className={`text-xs relative z-10 transition-colors ${
-                  isActive ? 'text-green-600' : 'text-gray-400'
-                }`}
+                className={`text-xs relative z-10 transition-colors ${isActive ? 'text-green-600' : 'text-gray-400'
+                  }`}
               >
                 {item.label}
               </span>

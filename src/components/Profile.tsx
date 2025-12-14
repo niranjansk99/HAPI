@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Crown, Settings, Bell, Globe, Moon, Volume2, Trophy, ChevronRight } from 'lucide-react';
 import { Navigation } from './Navigation';
 import { useState } from 'react';
@@ -83,11 +83,10 @@ export function Profile({ onNavigate, userStats }: ProfileProps) {
                 transition={{ delay: 0.4 + index * 0.05, type: "spring", stiffness: 200 }}
                 whileHover={{ scale: achievement.unlocked ? 1.1 : 1, rotate: achievement.unlocked ? 5 : 0 }}
                 whileTap={{ scale: achievement.unlocked ? 0.95 : 1 }}
-                className={`aspect-square rounded-2xl flex flex-col items-center justify-center p-3 ${
-                  achievement.unlocked
+                className={`aspect-square rounded-2xl flex flex-col items-center justify-center p-3 ${achievement.unlocked
                     ? 'bg-gradient-to-br from-yellow-400 to-orange-400 shadow-md'
                     : 'bg-gray-100'
-                }`}
+                  }`}
               >
                 <span className={`text-3xl mb-1 ${!achievement.unlocked && 'opacity-30'}`}>
                   {achievement.emoji}

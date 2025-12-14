@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Heart, Target, Award } from 'lucide-react';
 import { Navigation } from './Navigation';
 
@@ -10,7 +10,7 @@ export function About({ onNavigate }: AboutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation currentPage="about" onNavigate={onNavigate} />
-      
+
       <main className="flex-1 px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -34,11 +34,11 @@ export function About({ onNavigate }: AboutProps) {
             className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 mb-6 shadow-sm"
           >
             <p className="text-gray-700 leading-relaxed mb-4">
-              We believe in the power of gentle design. Every pixel, every interaction, 
+              We believe in the power of gentle design. Every pixel, every interaction,
               every moment is crafted to bring joy and simplicity to your daily life.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Our mission is to create digital experiences that feel natural, 
+              Our mission is to create digital experiences that feel natural,
               intuitive, and delightful.
             </p>
           </motion.div>

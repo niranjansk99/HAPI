@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Trophy, Medal, Award, Crown } from 'lucide-react';
 
 interface LeaderboardProps {
@@ -124,18 +124,16 @@ export function Leaderboard({ onNavigate, userStats }: LeaderboardProps) {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 + index * 0.05 }}
-              className={`rounded-2xl p-4 shadow-md flex items-center gap-4 ${
-                user.isCurrentUser
+              className={`rounded-2xl p-4 shadow-md flex items-center gap-4 ${user.isCurrentUser
                   ? 'bg-gradient-to-r from-green-400 to-green-500 ring-2 ring-green-600'
                   : 'bg-white'
-              }`}
+                }`}
             >
               <div className="w-8 text-center">
                 {getRankIcon(user.rank)}
               </div>
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${
-                user.isCurrentUser ? 'bg-white/20' : 'bg-gradient-to-br from-blue-400 to-purple-400'
-              }`}>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${user.isCurrentUser ? 'bg-white/20' : 'bg-gradient-to-br from-blue-400 to-purple-400'
+                }`}>
                 {user.avatar}
               </div>
               <div className="flex-1">
