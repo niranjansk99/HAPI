@@ -21,6 +21,10 @@ interface SelectionScreenProps {
     multiSelect?: boolean;
     buttonText?: string;
     topIcon?: React.ReactNode;
+    videoSources?: {
+        mov: string;
+        webm: string;
+    };
 }
 
 export function SelectionScreen({
@@ -33,10 +37,12 @@ export function SelectionScreen({
     onSelect,
     multiSelect = false,
     buttonText = "Continue",
-    topIcon
+    topIcon,
+    videoSources
 }: SelectionScreenProps) {
 
     const handleSelect = (id: string) => {
+        // ... (no changes to logic)
         if (multiSelect) {
             const current = Array.isArray(selectedValues) ? selectedValues : [];
             if (current.includes(id)) {
@@ -49,6 +55,7 @@ export function SelectionScreen({
         }
     };
 
+    // ... (rest of helper functions)
     const isSelected = (id: string) => {
         if (multiSelect) {
             return Array.isArray(selectedValues) && selectedValues.includes(id);
@@ -79,7 +86,26 @@ export function SelectionScreen({
                 transition={{ delay: 0.2 }}
                 className="text-center mb-8"
             >
-                {topIcon && (
+                {videoSources ? (
+                    <motion.div
+                        className="mb-8"
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                    >
+                        <div className="w-60 h-60 mx-auto">
+                            <video
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="w-full h-full pointer-events-none"
+                            >
+                                <source src={videoSources.mov} type="video/quicktime" />
+                                <source src={videoSources.webm} type="video/webm" />
+                            </video>
+                        </div>
+                    </motion.div>
+                ) : topIcon && (
                     <motion.div
                         animate={{
                             scale: [1, 1.2, 1],
