@@ -28,7 +28,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   };
 
   const nextStep = () => {
-    if (step === 4) { // Changed from 6 to match actual steps
+    if (step === ) { // Changed from 6 to match actual steps
       onComplete();
     } else {
       setStep(prev => prev + 1);
@@ -39,7 +39,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     setStep(prev => prev - 1);
   };
 
-  const dailyGoalOptions = [
+  const feelingsOptions = [
     {
       id: 'Calm',
       label: 'Calm',
@@ -120,7 +120,18 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onBack={prevStep}
       headline="How are you feeling right now?"
       subline="Don't overthink it - just follow you first intention"
-      options={dailyGoalOptions}
+      options={feelingsOptions}
+      selectedValues={userData.dailyGoal}
+      onSelect={(val) => updateUserData('dailyGoal', val)}
+      topIcon="✨"
+    />,
+    <SelectionScreen
+      key="daily"
+      onNext={nextStep}
+      onBack={prevStep}
+      headline="How are you feeling right now?"
+      subline="Don't overthink it - just follow you first intention"
+      options={feelingsOptions}
       selectedValues={userData.dailyGoal}
       onSelect={(val) => updateUserData('dailyGoal', val)}
       topIcon="✨"
