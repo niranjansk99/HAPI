@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Home, BookOpen, TrendingUp, User } from 'lucide-react';
+import { Home, BookOpen, TrendingUp, User, Map as MapIcon } from 'lucide-react';
 
 interface NavigationProps {
   currentPage: string;
@@ -11,6 +11,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     { id: 'home', icon: Home, label: 'Home' },
     { id: 'lessons', icon: BookOpen, label: 'Learn' },
     { id: 'progress', icon: TrendingUp, label: 'Progress' },
+    { id: 'journey', icon: MapIcon, label: 'Journey' },
     { id: 'profile', icon: User, label: 'Profile' }
   ];
 

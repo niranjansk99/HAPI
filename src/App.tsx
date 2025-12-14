@@ -4,6 +4,7 @@ import { Lessons } from './components/Lessons';
 import { Progress } from './components/Progress';
 import { Profile } from './components/Profile';
 import { LessonDetail } from './components/LessonDetail';
+import { JourneyScreen } from './components/JourneyScreen';
 import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
 import { Shop } from './components/Shop';
@@ -56,6 +57,8 @@ export default function App() {
         return <Progress onNavigate={setCurrentPage} userStats={userStats} />;
       case 'profile':
         return <Profile onNavigate={setCurrentPage} userStats={userStats} />;
+      case 'journey':
+        return <JourneyScreen onNavigate={setCurrentPage} userStats={userStats} />;
       case 'lesson-detail':
         return <LessonDetail onNavigate={setCurrentPage} lesson={selectedLesson} userStats={userStats} setUserStats={setUserStats} />;
       case 'achievements':
