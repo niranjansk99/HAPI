@@ -1,23 +1,14 @@
 import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { CalmingTextScreen } from './onboarding/CalmingTextScreen';
 import { SelectionScreen } from './onboarding/SelectionScreen';
-import jumpingVideo from '../assets/Jumping-vmake.mov';
-//import { ReminderScreen } from './onboarding/ReminderScreen';
-import { ReadyScreen } from './onboarding/ReadyScreen';
+import { InformationScreen } from './onboarding/InformationScreen';
+import { InputScreen } from './onboarding/InputScreen';
 import { MoodScreen } from "./onboarding/MoodScreen";
-import { TooMuchScreen } from './onboarding/TooMuchScreen';
-import { ReassuranceScreen } from './onboarding/ReassuranceScreen';
-import { CalmMomentScreen } from './onboarding/CalmMomentScreen';
-import { Screen9 } from './onboarding/Screen9';
-import { Screen10 } from './onboarding/Screen10';
-import { Screen11 } from './onboarding/Screen11';
-import { Screen12 } from './onboarding/Screen12';
-import { Screen13 } from './onboarding/Screen13';
-import { Screen14 } from './onboarding/Screen14';
-import { Screen15 } from './onboarding/Screen15';
-import { Screen16 } from './onboarding/Screen16';
-import { Screen17 } from './onboarding/Screen17';
+import { ReadyScreen } from './onboarding/ReadyScreen';
+import jumpingVideo from '../assets/Jumping-vmake.mov';
 import * as LucideIcons from 'lucide-react';
+
 interface OnboardingProps {
   onComplete: () => void;
 }
@@ -42,7 +33,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   });
 
   const updateUserData = (key: string, value: any) => {
-    setUserData({ ...userData, [key]: value });
+    setUserData(prev => ({ ...prev, [key]: value }));
   };
 
   const nextStep = () => {
@@ -101,6 +92,110 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     }
   ];
 
+  const tooMuchOptions = [
+    {
+      id: "yes_definitely",
+      label: "Yes, definitely",
+      emoji: "😮‍💨",
+      color: "from-rose-400 to-red-500",
+      desc: "It felt heavy today",
+      icon: LucideIcons.Circle // Placeholder icon as Screen uses emoji
+    },
+    {
+      id: "a_bit",
+      label: "A bit",
+      emoji: "😵‍💫",
+      color: "from-amber-400 to-orange-500",
+      desc: "Some moments were intense",
+      icon: LucideIcons.Circle
+    },
+    {
+      id: "not_really",
+      label: "Not really",
+      emoji: "🙂",
+      color: "from-emerald-400 to-teal-500",
+      desc: "It was manageable",
+      icon: LucideIcons.Circle
+    },
+  ];
+
+  const momentFeelGoodOptions = [
+    "Being with someone",
+    "Feeling understood",
+    "Doing something with my hands",
+    "Being outside",
+    "Having no pressure",
+    "I don’t know",
+  ].map(opt => ({
+    id: opt,
+    label: opt,
+    desc: "",
+    icon: LucideIcons.Circle, // Placeholder
+    color: "from-green-50 to-green-100", // Subtle selection color
+    recommended: false
+  }));
+
+  const worldValueOptions = [
+    "Kindness",
+    "Gratitude",
+    "Freedom",
+    "Creativity",
+    "Stability",
+    "Connection",
+    "I’m not sure",
+  ].map(opt => ({
+    id: opt,
+    label: opt,
+    desc: "",
+    icon: LucideIcons.Circle,
+    color: "from-green-50 to-green-100",
+    recommended: false
+  }));
+
+  const identityStyleOptions = [
+    "Helping people directly",
+    "Creating something",
+    "Working with nature animals",
+    "Expressing ideas / stories",
+    "I don’t know yet",
+  ].map(opt => ({
+    id: opt,
+    label: opt,
+    desc: "",
+    icon: LucideIcons.Circle,
+    color: "from-green-50 to-green-100",
+    recommended: false
+  }));
+
+  const checkInFeelingOptions = [
+    "A bit lighter",
+    "Seen / understood",
+    "Still unsure",
+    "Overwhelmed",
+    "I don’t really know",
+  ].map(opt => ({
+    id: opt,
+    label: opt,
+    desc: "",
+    icon: LucideIcons.Circle,
+    color: "from-green-50 to-green-100",
+    recommended: false
+  }));
+
+  const mostTruePartsOptions = [
+    "Feeling connected to others",
+    "Feeling calm and without pressure",
+    "Giving something to others",
+    "Having direction, even if small",
+    "I’m not sure yet",
+  ].map(opt => ({
+    id: opt,
+    label: opt,
+    desc: "",
+    icon: LucideIcons.Circle,
+    color: "from-green-50 to-green-100",
+    recommended: false
+  }));
 
   const screens = [
     <CalmingTextScreen
@@ -139,6 +234,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       </>}
       buttonText="Go ahead"
     />,
+
     <SelectionScreen
       key="daily"
       onNext={nextStep}
@@ -150,67 +246,140 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('dailyGoal', val)}
       topIcon="✨"
     />,
-    <TooMuchScreen key="toomuch" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
-    <ReassuranceScreen key="reassurance" onNext={nextStep} />,
 
-    <CalmMomentScreen
+    <SelectionScreen
+      key="toomuch"
+      onNext={nextStep}
+      onBack={prevStep}
+      headline="Did today feel like too much?"
+      subline="Choose the option that fits best"
+      options={tooMuchOptions}
+      selectedValues={userData.tooMuchToday}
+      onSelect={(val) => updateUserData('tooMuchToday', val)}
+      topIcon={
+        userData.tooMuchToday === 'yes_definitely' ? '😮‍💨' :
+          userData.tooMuchToday === 'a_bit' ? '😵‍💫' : '🙂'
+      }
+    />,
+
+    <InformationScreen
+      key="reassurance"
+      onNext={nextStep}
+      icon="🌱"
+      headline="Thanks for telling me."
+      subline="You don’t need to solve anything today."
+    />,
+
+    <InputScreen
       key="calm-moment"
       onNext={nextStep}
       onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData}
+      headline="Can you remember a moment where you felt calm or okay recently?"
+      subline="A quick note is enough — one sentence is fine."
+      placeholder="Example: When I had my tea in the morning and the house was quiet…"
+      text={userData.calmMomentText}
+      setText={(val) => updateUserData('calmMomentText', val)}
+      topIcon="🫧"
+      allowSkip={true}
+      skipText="Nothing comes to mind"
+      isSkipped={userData.calmMomentNone}
+      onSkip={(val) => updateUserData('calmMomentNone', val)}
     />,
 
-    <Screen9
+    <SelectionScreen
       key="screen-9"
       onNext={nextStep}
       onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData}
+      headline="What do you think made this moment feel good?"
+      subline="Pick the option that fits best — there’s no wrong answer."
+      options={momentFeelGoodOptions}
+      selectedValues={userData.momentFeelGoodReason}
+      onSelect={(val) => updateUserData('momentFeelGoodReason', val)}
+      topIcon="✨"
     />,
-    <Screen10 key="screen-10" onNext={nextStep} />,
 
-    <Screen11
+    <InformationScreen
+      key="screen-10"
+      onNext={nextStep}
+      icon="🌱"
+      headline="You don’t need perfect answers. Patterns matter more than clarity"
+    />,
+
+    <SelectionScreen
       key="screen-11"
       onNext={nextStep}
       onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData}
+      headline="If one thing mattered more in the world, what should it be?"
+      subline="Pick the option that fits best — there’s no wrong answer."
+      options={worldValueOptions}
+      selectedValues={userData.worldValue}
+      onSelect={(val) => updateUserData('worldValue', val)}
+      topIcon="✨"
     />,
 
-    <Screen12
+    <SelectionScreen
       key="screen-12"
       onNext={nextStep}
       onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData}
+      headline="Which of these feels more like you?"
+      subline="Choose the closest fit — you can always change this later."
+      options={identityStyleOptions}
+      selectedValues={userData.identityStyle}
+      onSelect={(val) => updateUserData('identityStyle', val)}
+      topIcon="✨"
     />,
 
-    <Screen13 key="screen-13"
-      onNext={nextStep} />,
-
-    <Screen14 key="screen-14"
+    <InformationScreen
+      key="screen-13"
       onNext={nextStep}
-      onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData} />,
-
-    <Screen15 key="screen-15"
-      onNext={nextStep}
-      onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData} />,
-
-    <Screen16 key="screen-16"
-      onNext={nextStep}
+      icon="🌱"
+      headline="Many people find their direction by listening, not forcing."
     />,
 
-    <Screen17
+    <SelectionScreen
+      key="screen-14"
+      onNext={nextStep}
+      onBack={prevStep}
+      headline="Before we move forward — let me check in with you"
+      subline="How do you feel right now, after answering these questions?"
+      options={checkInFeelingOptions}
+      selectedValues={userData.checkInFeeling}
+      onSelect={(val) => updateUserData('checkInFeeling', val)}
+      topIcon="💭"
+    />,
+
+    <SelectionScreen
+      key="screen-15"
+      onNext={nextStep}
+      onBack={prevStep}
+      headline="What parts of your answers felt most true to you?"
+      subline="Choose the one that feels closest — you can always change it later."
+      options={mostTruePartsOptions}
+      selectedValues={userData.mostTrueParts}
+      onSelect={(val) => updateUserData('mostTrueParts', val)}
+      topIcon="🧭"
+    />,
+
+    <InformationScreen
+      key="screen-16"
+      onNext={nextStep}
+      icon="🌱"
+      headline="You don’t need clarity to move forward. You only need honesty — and you’re already doing that."
+    />,
+
+    <SelectionScreen
       key="screen-17"
       onNext={nextStep}
       onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData}
+      headline="Can I share something I noticed about you?"
+      subline="You’re always free to say no."
+      options={[
+        { id: "true", label: "Yes", desc: "", icon: LucideIcons.Circle, color: "from-green-50 to-green-100" },
+        { id: "false", label: "No", desc: "", icon: LucideIcons.Circle, color: "from-green-50 to-green-100" }
+      ]}
+      selectedValues={userData.shareObservationConsent ? "true" : "false"}
+      onSelect={(val) => updateUserData('shareObservationConsent', val === "true")}
+      topIcon="💬"
     />,
 
     <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
