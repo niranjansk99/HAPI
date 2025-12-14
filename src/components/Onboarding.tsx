@@ -6,7 +6,8 @@ import { InformationScreen } from './onboarding/InformationScreen';
 import { InputScreen } from './onboarding/InputScreen';
 import { SequenceScreen } from './onboarding/SequenceScreen';
 import { ReadyScreen } from './onboarding/ReadyScreen';
-import jumpingVideo from '../assets/Jumping-vmake.webm';
+import jumpingVideoMov from '../assets/Jumping-vmake.mov';
+import jumpingVideoWebm from '../assets/Jumping-vmake.webm';
 import * as LucideIcons from 'lucide-react';
 
 interface OnboardingProps {
@@ -251,7 +252,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <CalmingTextScreen
       key="welcome"
       onNext={nextStep}
-      videoSrc={jumpingVideo}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       headline="Welcome to HAPI"
       subtext={<>
         You don’t have to have it all figured out
@@ -265,7 +266,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       key="goal"
       onNext={nextStep}
       onBack={prevStep}
-      videoSrc={jumpingVideo}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       subtext={<>
         Feeling overwhelmed doesn’t mean something is wrong with you.
         <br /><br /><br />
@@ -278,7 +279,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       key="experience"
       onNext={nextStep}
       onBack={prevStep}
-      videoSrc={jumpingVideo}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       subtext={<>
         Hapi is here to walk with you.
         <br /><br /><br />
