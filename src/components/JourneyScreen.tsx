@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navigation } from './Navigation';
-import { Map, CheckCircle2, Lock, X, PlayCircle } from 'lucide-react';
+import { Map, CheckCircle2, Lock, X, PlayCircle, Moon, Sun } from 'lucide-react';
 
 interface JourneyScreenProps {
     onNavigate: (page: string) => void;
@@ -10,6 +10,10 @@ interface JourneyScreenProps {
 
 export function JourneyScreen({ onNavigate }: JourneyScreenProps) {
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
+    const [timerStatus, setTimerStatus] = useState<'idle' | 'starting' | 'running' | 'finished'>('idle');
+    const [countdown, setCountdown] = useState(5);
+    const [timeLeft, setTimeLeft] = useState(120); // 2 minutes
+    const [focusMode, setFocusMode] = useState(false);
 
     const days = [
         { day: 1, status: 'active', label: '🌱 Day 1 – Check-in & reflection' },
@@ -21,10 +25,49 @@ export function JourneyScreen({ onNavigate }: JourneyScreenProps) {
         { day: 7, status: 'locked', label: '🧭 Day 7 – Summary & insight' },
     ];
 
+    useEffect(() => {
+        let interval: any;
+
+        if (timerStatus === 'starting') {
+            interval = setInterval(() => {
+                setCountdown((prev) => {
+                    if (prev <= 1) {
+                        setTimerStatus('running');
+                        return 5;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        } else if (timerStatus === 'running') {
+            interval = setInterval(() => {
+                setTimeLeft((prev) => {
+                    if (prev <= 0) {
+                        setTimerStatus('finished');
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        }
+
+        return () => clearInterval(interval);
+    }, [timerStatus]);
+
     const handleDayClick = (day: number) => {
         if (day === 1) {
             setSelectedDay(1);
+            // Reset states when opening
+            setTimerStatus('idle');
+            setCountdown(5);
+            setTimeLeft(120);
+            setFocusMode(false);
         }
+    };
+
+    const formatTime = (seconds: number) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
     return (
@@ -37,15 +80,28 @@ export function JourneyScreen({ onNavigate }: JourneyScreenProps) {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed inset-0 bg-white z-[60] overflow-y-auto"
+                        className={`fixed inset-0 z-[60] overflow-y-auto transition-colors duration-700 ${focusMode ? 'bg-black' : 'bg-white'
+                            }`}
                     >
                         <div className="p-6 min-h-screen flex flex-col">
-                            <button
-                                onClick={() => setSelectedDay(null)}
-                                className="self-end w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-8 hover:bg-gray-200 transition-colors"
-                            >
-                                <X className="w-6 h-6 text-gray-600" />
-                            </button>
+                            <div className="flex justify-end items-center gap-4 mb-8">
+                                {timerStatus === 'running' && (
+                                    <button
+                                        onClick={() => setFocusMode(!focusMode)}
+                                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${focusMode ? 'bg-gray-800 text-yellow-300' : 'bg-gray-100 text-gray-600'
+                                            }`}
+                                    >
+                                        {focusMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                                    </button>
+                                )}
+                                <button
+                                    onClick={() => setSelectedDay(null)}
+                                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${focusMode ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        }`}
+                                >
+                                    <X className="w-6 h-6" />
+                                </button>
+                            </div>
 
                             <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full">
                                 <motion.div
@@ -54,30 +110,90 @@ export function JourneyScreen({ onNavigate }: JourneyScreenProps) {
                                     transition={{ delay: 0.2 }}
                                     className="text-center space-y-8"
                                 >
-                                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto text-4xl shadow-sm">
-                                        🌱
+                                    {/* Icon / Timer Area */}
+                                    <div className="relative h-32 flex items-center justify-center">
+                                        <AnimatePresence mode="wait">
+                                            {timerStatus === 'idle' && (
+                                                <motion.div
+                                                    key="idle-icon"
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    exit={{ scale: 0.8, opacity: 0 }}
+                                                    className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl shadow-sm"
+                                                >
+                                                    🌱
+                                                </motion.div>
+                                            )}
+                                            {timerStatus === 'starting' && (
+                                                <motion.div
+                                                    key="countdown"
+                                                    initial={{ scale: 0.5, opacity: 0 }}
+                                                    animate={{ scale: 1.5, opacity: 1 }}
+                                                    exit={{ scale: 2, opacity: 0 }}
+                                                    className={`text-6xl font-black ${focusMode ? 'text-white' : 'text-green-600'}`}
+                                                >
+                                                    {countdown}
+                                                </motion.div>
+                                            )}
+                                            {timerStatus === 'running' && (
+                                                <motion.div
+                                                    key="timer"
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    className={`text-5xl font-mono tracking-wider ${focusMode ? 'text-white' : 'text-gray-800'}`}
+                                                >
+                                                    {formatTime(timeLeft)}
+                                                </motion.div>
+                                            )}
+                                            {timerStatus === 'finished' && (
+                                                <motion.div
+                                                    key="done"
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg"
+                                                >
+                                                    <CheckCircle2 className="w-10 h-10" />
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
                                     </div>
 
-                                    <h2 className="text-2xl font-bold text-gray-800">
-                                        Do this now.<br />It takes 2 minutes.
-                                    </h2>
+                                    {/* Text Content */}
+                                    <div className={`transition-all duration-700 ${focusMode ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100'}`}>
+                                        <h2 className="text-2xl font-bold mb-8 text-gray-800">
+                                            {timerStatus === 'finished' ? "Well done." : <>Do this now.<br />It takes 2 minutes.</>}
+                                        </h2>
 
-                                    <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-medium">
-                                        <p>Sit down.</p>
-                                        <p>Put both feet on the ground.</p>
-                                        <p>Breathe in slowly.</p>
-                                        <p>Breathe out slowly.</p>
+                                        <div className="space-y-6 text-lg leading-relaxed font-medium text-gray-600">
+                                            <p className={timerStatus === 'starting' ? 'animate-pulse' : ''}>Sit down.</p>
+                                            <p>Put both feet on the ground.</p>
+                                            <p>Breathe in slowly.</p>
+                                            <p>Breathe out slowly.</p>
+                                        </div>
                                     </div>
 
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        onClick={() => setSelectedDay(null)}
-                                        className="mt-12 bg-green-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:bg-green-600 transition-colors flex items-center gap-2 mx-auto"
-                                    >
-                                        <PlayCircle className="w-5 h-5" />
-                                        Start Exercise
-                                    </motion.button>
+                                    {/* Actions */}
+                                    {timerStatus === 'idle' && (
+                                        <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setTimerStatus('starting')}
+                                            className="mt-12 bg-green-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:bg-green-600 transition-colors flex items-center gap-2 mx-auto"
+                                        >
+                                            <PlayCircle className="w-5 h-5" />
+                                            Start Timer
+                                        </motion.button>
+                                    )}
+
+                                    {timerStatus === 'running' && !focusMode && (
+                                        <motion.p
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            className="text-sm text-gray-400 mt-8"
+                                        >
+                                            Tap the moon icon to focus
+                                        </motion.p>
+                                    )}
                                 </motion.div>
                             </div>
                         </div>
