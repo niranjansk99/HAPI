@@ -11,6 +11,13 @@ import { ReassuranceScreen } from './onboarding/ReassuranceScreen';
 import { CalmMomentScreen } from './onboarding/CalmMomentScreen';
 import { Screen9 } from './onboarding/Screen9';
 import { Screen10 } from './onboarding/Screen10';
+import { Screen11 } from './onboarding/Screen11';
+import { Screen12 } from './onboarding/Screen12';
+import { Screen13 } from './onboarding/Screen13';
+import { Screen14 } from './onboarding/Screen14';
+import { Screen15 } from './onboarding/Screen15';
+import { Screen16 } from './onboarding/Screen16';
+import { Screen17 } from './onboarding/Screen17';
 interface OnboardingProps {
   onComplete: () => void;
 }
@@ -27,6 +34,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     calmMomentText: "",
     calmMomentNone: false,
     momentFeelGoodReason: "",
+    worldValue: "",
+    identityStyle: "",
+    checkInFeeling: "",
+    mostTrueParts: "",
+    shareObservationConsent: false,
   });
 
   const updateUserData = (key: string, value: any) => {
@@ -59,6 +71,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <MoodScreen key="mood" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <TooMuchScreen key="toomuch" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <ReassuranceScreen key="reassurance" onNext={nextStep} />,
+
     <CalmMomentScreen
       key="calm-moment"
       onNext={nextStep}
@@ -66,6 +79,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       userData={userData}
       updateUserData={updateUserData}
     />,
+
     <Screen9
       key="screen-9"
       onNext={nextStep}
@@ -74,6 +88,50 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       updateUserData={updateUserData}
     />,
     <Screen10 key="screen-10" onNext={nextStep} />,
+
+    <Screen11
+      key="screen-11"
+      onNext={nextStep}
+      onBack={prevStep}
+      userData={userData}
+      updateUserData={updateUserData}
+    />,
+
+    <Screen12
+      key="screen-12"
+      onNext={nextStep}
+      onBack={prevStep}
+      userData={userData}
+      updateUserData={updateUserData}
+    />,
+
+    <Screen13 key="screen-13"
+      onNext={nextStep} />,
+
+    <Screen14 key="screen-14"
+      onNext={nextStep}
+      onBack={prevStep}
+      userData={userData}
+      updateUserData={updateUserData} />,
+
+    <Screen15 key="screen-15"
+      onNext={nextStep}
+      onBack={prevStep}
+      userData={userData}
+      updateUserData={updateUserData} />,
+
+    <Screen16 key="screen-16"
+      onNext={nextStep}
+    />,
+
+    <Screen17
+      key="screen-17"
+      onNext={nextStep}
+      onBack={prevStep}
+      userData={userData}
+      updateUserData={updateUserData}
+    />,
+
     <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
   ];
 
