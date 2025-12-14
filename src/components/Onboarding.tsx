@@ -7,6 +7,7 @@ import { DailyGoalScreen } from './onboarding/DailyGoalScreen';
 import { ReadyScreen } from './onboarding/ReadyScreen';
 import { MoodScreen } from "./onboarding/MoodScreen";
 import { TooMuchScreen } from './onboarding/TooMuchScreen';
+import { ReassuranceScreen } from './onboarding/ReassuranceScreen';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -28,12 +29,16 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   };
 
   const nextStep = () => {
-    if (currentStep < 5) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      onComplete();
-    }
+    setCurrentStep((s) => {
+      const next = s + 1;
+      if (next >= screens.length) {
+        onComplete();
+        return s; // keep last valid step
+      }
+      return next;
+    });
   };
+
 
   const prevStep = () => {
     if (currentStep > 0) {
@@ -47,16 +52,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <ExperienceScreen key="experience" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <DailyGoalScreen key="daily" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <MoodScreen key="mood" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
-    //<ReminderScreen key="reminder" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
-    <TooMuchScreen
-      key="toomuch"
-      onNext={nextStep}
-      onBack={prevStep}
-      userData={userData}
-      updateUserData={updateUserData}
-    />,
+    <TooMuchScreen key="toomuch" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
+    <ReassuranceScreen key="reassurance" onNext={nextStep} />,
     <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
   ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50">
@@ -65,7 +65,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       {/* Progress Indicator */}
       <div className="fixed bottom-8 left-0 right-0 px-6">
         <div className="max-w-md mx-auto flex gap-2">
-          {[...Array(6)].map((_, index) => (
+          {[...Array(screens.length)].map((_, index) => (
             <div
               key={index}
               className={`h-1 flex-1 rounded-full transition-all ${index <= currentStep ? 'bg-green-500' : 'bg-gray-300'
