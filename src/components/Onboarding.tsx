@@ -6,6 +6,7 @@ import { DailyGoalScreen } from './onboarding/DailyGoalScreen';
 //import { ReminderScreen } from './onboarding/ReminderScreen';
 import { ReadyScreen } from './onboarding/ReadyScreen';
 import { MoodScreen } from "./onboarding/MoodScreen";
+import { TooMuchScreen } from './onboarding/TooMuchScreen';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -19,6 +20,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     dailyGoal: '',
     reminderTime: '',
     mood: 50,
+    tooMuchToday: "a_bit"
   });
 
   const updateUserData = (key: string, value: any) => {
@@ -46,6 +48,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <DailyGoalScreen key="daily" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <MoodScreen key="mood" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     //<ReminderScreen key="reminder" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
+    <TooMuchScreen
+      key="toomuch"
+      onNext={nextStep}
+      onBack={prevStep}
+      userData={userData}
+      updateUserData={updateUserData}
+    />,
     <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
   ];
 
