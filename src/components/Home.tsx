@@ -133,7 +133,7 @@ export function Home({ onNavigate, userStats }: HomeProps) {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => onNavigate('lessons')}
+            onClick={() => onNavigate('journey')}
             className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl p-6 shadow-lg flex items-center justify-between group"
           >
             <div className="flex items-center gap-4">
