@@ -5,7 +5,6 @@ import { SelectionScreen } from './onboarding/SelectionScreen';
 import { InformationScreen } from './onboarding/InformationScreen';
 import { InputScreen } from './onboarding/InputScreen';
 import { SequenceScreen } from './onboarding/SequenceScreen';
-import { MoodScreen } from "./onboarding/MoodScreen";
 import { ReadyScreen } from './onboarding/ReadyScreen';
 import jumpingVideo from '../assets/Jumping-vmake.mov';
 import * as LucideIcons from 'lucide-react';

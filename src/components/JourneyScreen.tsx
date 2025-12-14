@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Navigation } from './Navigation';
-import { Map, CheckCircle2, Lock } from 'lucide-react';
+import { Map, CheckCircle2, Lock, X, PlayCircle } from 'lucide-react';
 
 interface JourneyScreenProps {
     onNavigate: (page: string) => void;
@@ -8,18 +9,82 @@ interface JourneyScreenProps {
 }
 
 export function JourneyScreen({ onNavigate }: JourneyScreenProps) {
+    const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
     const days = [
-        { day: 1, status: 'active', label: 'Start Here' },
-        { day: 2, status: 'locked', label: 'Day 2' },
-        { day: 3, status: 'locked', label: 'Day 3' },
-        { day: 4, status: 'locked', label: 'Day 4' },
-        { day: 5, status: 'locked', label: 'Day 5' },
-        { day: 6, status: 'locked', label: 'Day 6' },
-        { day: 7, status: 'locked', label: 'Day 7' },
+        { day: 1, status: 'active', label: '🌱 Day 1 – Check-in & reflection' },
+        { day: 2, status: 'locked', label: '👣 Day 2 – One small real-world step' },
+        { day: 3, status: 'locked', label: '🔄 Day 3 – Emotional check-in' },
+        { day: 4, status: 'locked', label: '🧪 Day 4 – Mini experiment' },
+        { day: 5, status: 'locked', label: '🪞 Day 5 – Reflection' },
+        { day: 6, status: 'locked', label: '👀 Day 6 – Observation' },
+        { day: 7, status: 'locked', label: '🧭 Day 7 – Summary & insight' },
     ];
 
+    const handleDayClick = (day: number) => {
+        if (day === 1) {
+            setSelectedDay(1);
+        }
+    };
+
     return (
-        <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50 pb-24">
+        <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50 pb-24 relative overflow-hidden">
+            {/* Slide-in Day Detail */}
+            <AnimatePresence>
+                {selectedDay === 1 && (
+                    <motion.div
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed inset-0 bg-white z-[60] overflow-y-auto"
+                    >
+                        <div className="p-6 min-h-screen flex flex-col">
+                            <button
+                                onClick={() => setSelectedDay(null)}
+                                className="self-end w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-8 hover:bg-gray-200 transition-colors"
+                            >
+                                <X className="w-6 h-6 text-gray-600" />
+                            </button>
+
+                            <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.2 }}
+                                    className="text-center space-y-8"
+                                >
+                                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto text-4xl shadow-sm">
+                                        🌱
+                                    </div>
+
+                                    <h2 className="text-2xl font-bold text-gray-800">
+                                        Do this now.<br />It takes 2 minutes.
+                                    </h2>
+
+                                    <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-medium">
+                                        <p>Sit down.</p>
+                                        <p>Put both feet on the ground.</p>
+                                        <p>Breathe in slowly.</p>
+                                        <p>Breathe out slowly.</p>
+                                    </div>
+
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => setSelectedDay(null)}
+                                        className="mt-12 bg-green-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:bg-green-600 transition-colors flex items-center gap-2 mx-auto"
+                                    >
+                                        <PlayCircle className="w-5 h-5" />
+                                        Start Exercise
+                                    </motion.button>
+                                </motion.div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Header */}
             <header className="pt-12 px-6 mb-8 text-center">
                 <motion.div
@@ -55,10 +120,11 @@ export function JourneyScreen({ onNavigate }: JourneyScreenProps) {
                         >
                             {/* Dot / Button */}
                             <button
+                                onClick={() => handleDayClick(item.day)}
                                 disabled={item.status === 'locked'}
                                 className={`relative w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all z-10 
                   ${item.status === 'active'
-                                        ? 'bg-green-500 text-white scale-110 ring-4 ring-green-100'
+                                        ? 'bg-green-500 text-white scale-110 ring-4 ring-green-100 cursor-pointer'
                                         : item.status === 'completed'
                                             ? 'bg-green-600 text-white'
                                             : 'bg-white text-gray-300'
