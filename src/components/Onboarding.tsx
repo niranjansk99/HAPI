@@ -4,13 +4,12 @@ import { CalmingTextScreen } from './onboarding/CalmingTextScreen';
 import { SelectionScreen } from './onboarding/SelectionScreen';
 import { InformationScreen } from './onboarding/InformationScreen';
 import { InputScreen } from './onboarding/InputScreen';
+import { SequenceScreen } from './onboarding/SequenceScreen';
 import { MoodScreen } from "./onboarding/MoodScreen";
 import { ReadyScreen } from './onboarding/ReadyScreen';
 import jumpingVideo from '../assets/Jumping-vmake.mov';
 import * as LucideIcons from 'lucide-react';
 
-import { Screen18Yes } from './onboarding/Screen18Yes';
-import { Screen18No } from './onboarding/Screen18No';
 interface OnboardingProps {
   onComplete: () => void;
 }
@@ -19,7 +18,6 @@ interface OnboardingProps {
 export function Onboarding({ onComplete }: OnboardingProps) {
 
   const [currentStep, setCurrentStep] = useState(0);
-  const goToStep = (i: number) => setCurrentStep(i);
 
   const [userData, setUserData] = useState({
     goal: '',
@@ -41,10 +39,25 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   });
 
   const updateUserData = (key: string, value: any) => {
-    setUserData((prev) => ({ ...prev, [key]: value }));
+    setUserData(prev => ({ ...prev, [key]: value }));
   };
 
   const nextStep = () => {
+    // Branching Logic
+    if (currentStep === 15) { // Screen 17 (Index 15)
+      if (userData.shareObservationConsent === true) {
+        setCurrentStep(16); // Go to SequenceScreen (Yes path)
+      } else {
+        setCurrentStep(17); // Go to SelectionScreen (No path)
+      }
+      return;
+    }
+
+    if (currentStep === 16) { // SequenceScreen (Index 16)
+      setCurrentStep(18); // Skip to ReadyScreen
+      return;
+    }
+
     setCurrentStep((s) => {
       const next = s + 1;
       if (next >= screens.length) {
@@ -57,6 +70,16 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
 
   const prevStep = () => {
+    if (currentStep === 18 && userData.shareObservationConsent === true) {
+      setCurrentStep(16); // Go back to SequenceScreen if coming from Yes path
+      return;
+    }
+
+    if (currentStep === 18 && userData.shareObservationConsent === false) {
+      setCurrentStep(17); // Go back to SelectionScreen if coming from No path
+      return;
+    }
+
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
@@ -205,7 +228,27 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     recommended: false
   }));
 
+  const screen18YesBullets = [
+    "As you were answering, one thing became very clear.",
+    "You seem to feel most at peace when there’s space. When no one is rushing you.\nWhen nothing is expected from you.",
+    "And that’s actually something really beautiful.",
+    "It often means you’re someone who listens deeply.",
+    "Someone who feels a lot.",
+    "Someone who gives more when things feel honest and calm.",
+    "There’s nothing wrong with needing space.",
+    "For many people, that’s exactly where they feel most like themselves.",
+    "This doesn’t mean you’re lost.",
+    "It usually means you’re in a moment where you’re becoming more aware of what truly matters to you.",
+  ];
+
+  const screen18NoOptions = [
+    { id: "helpful", label: "Yes, that sounds helpful", value: "helpful", desc: "", icon: LucideIcons.Circle, color: "from-green-50 to-green-100" },
+    { id: "unsure", label: "I’m not sure yet", value: "unsure", desc: "", icon: LucideIcons.Circle, color: "from-green-50 to-green-100" },
+    { id: "practical", label: "I just want something practical", value: "practical", desc: "", icon: LucideIcons.Circle, color: "from-green-50 to-green-100" },
+  ];
+
   const screens = [
+    // 0
     <CalmingTextScreen
       key="welcome"
       onNext={nextStep}
@@ -218,6 +261,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       </>}
       buttonText="Get Started"
     />,
+    // 1
     <CalmingTextScreen
       key="goal"
       onNext={nextStep}
@@ -230,6 +274,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       </>}
       buttonText="Go ahead"
     />,
+    // 2
     <CalmingTextScreen
       key="experience"
       onNext={nextStep}
@@ -242,7 +287,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       </>}
       buttonText="Go ahead"
     />,
-
+    // 3
     <SelectionScreen
       key="daily"
       onNext={nextStep}
@@ -254,7 +299,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('dailyGoal', val)}
       topIcon="✨"
     />,
-
+    // 4
     <SelectionScreen
       key="toomuch"
       onNext={nextStep}
@@ -269,7 +314,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           userData.tooMuchToday === 'a_bit' ? '😵‍💫' : '🙂'
       }
     />,
-
+    // 5
     <InformationScreen
       key="reassurance"
       onNext={nextStep}
@@ -277,7 +322,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       headline="Thanks for telling me."
       subline="You don’t need to solve anything today."
     />,
-
+    // 6
     <InputScreen
       key="calm-moment"
       onNext={nextStep}
@@ -293,7 +338,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       isSkipped={userData.calmMomentNone}
       onSkip={(val) => updateUserData('calmMomentNone', val)}
     />,
-
+    // 7
     <SelectionScreen
       key="screen-9"
       onNext={nextStep}
@@ -305,14 +350,14 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('momentFeelGoodReason', val)}
       topIcon="✨"
     />,
-
+    // 8
     <InformationScreen
       key="screen-10"
       onNext={nextStep}
       icon="🌱"
       headline="You don’t need perfect answers. Patterns matter more than clarity"
     />,
-
+    // 9
     <SelectionScreen
       key="screen-11"
       onNext={nextStep}
@@ -324,7 +369,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('worldValue', val)}
       topIcon="✨"
     />,
-
+    // 10
     <SelectionScreen
       key="screen-12"
       onNext={nextStep}
@@ -336,14 +381,14 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('identityStyle', val)}
       topIcon="✨"
     />,
-
+    // 11
     <InformationScreen
       key="screen-13"
       onNext={nextStep}
       icon="🌱"
       headline="Many people find their direction by listening, not forcing."
     />,
-
+    // 12
     <SelectionScreen
       key="screen-14"
       onNext={nextStep}
@@ -355,7 +400,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('checkInFeeling', val)}
       topIcon="💭"
     />,
-
+    // 13
     <SelectionScreen
       key="screen-15"
       onNext={nextStep}
@@ -367,16 +412,17 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onSelect={(val) => updateUserData('mostTrueParts', val)}
       topIcon="🧭"
     />,
-
+    // 14
     <InformationScreen
       key="screen-16"
       onNext={nextStep}
       icon="🌱"
       headline="You don’t need clarity to move forward. You only need honesty — and you’re already doing that."
     />,
-
+    // 15 (Branching Point)
     <SelectionScreen
       key="screen-17"
+      onNext={nextStep}
       onBack={prevStep}
       headline="Can I share something I noticed about you?"
       subline="You’re always free to say no."
@@ -387,32 +433,39 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       selectedValues={userData.shareObservationConsent ? "true" : "false"}
       onSelect={(val) => updateUserData('shareObservationConsent', val === "true")}
       topIcon="💬"
-      onNextYes={() => setCurrentStep((s) => s + 1)} // go to Screen18Yes
-      onNextNo={() => setCurrentStep((s) => s + 2)}  // skip Screen18Yes -> Screen18No
     />,
-
-    <Screen18Yes
+    // 16 (Yes Path)
+    <SequenceScreen
       key="screen-18-yes"
-      onBack={prevStep}
-      onNext={() => setCurrentStep((s) => s + 2)} // skip Screen18No after YES
-    />,
-
-    <Screen18No
-      key="screen-18-no"
-      onBack={prevStep}
       onNext={nextStep}
-      userData={userData}
-      updateUserData={updateUserData}
+      onBack={prevStep}
+      icon="🌿"
+      headline="Something I noticed"
+      bullets={screen18YesBullets}
+    />,
+    // 17 (No Path)
+    <SelectionScreen
+      key="screen-18-no"
+      onNext={nextStep}
+      onBack={prevStep}
+      headline="I won’t tell you who you are. But I can help you notice patterns — if you want."
+      subline="What would you prefer?"
+      options={screen18NoOptions}
+      selectedValues={userData.screen18Preference}
+      onSelect={(val) => updateUserData("screen18Preference", val)}
+      topIcon="🧭"
     />,
 
+    // 18 (End)
     <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
   ];
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50">
-      {screens[currentStep]}
-
+    <div className="bg-white min-h-screen">
+      <AnimatePresence mode="wait">
+        {screens[currentStep]}
+      </AnimatePresence>
       {/* Progress Indicator */}
       <div className="fixed bottom-8 left-0 right-0 px-6">
         <div className="max-w-md mx-auto flex gap-2">

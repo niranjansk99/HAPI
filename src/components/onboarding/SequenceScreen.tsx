@@ -1,37 +1,34 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-interface Screen18YesProps {
+interface SequenceScreenProps {
     onNext: () => void;
     onBack: () => void;
+    icon: React.ReactNode;
+    headline: string;
+    bullets: string[];
+    autoAdvanceDelay?: number;
+    buttonText?: string;
 }
 
-export function Screen18Yes({ onNext, onBack }: Screen18YesProps) {
-    const bullets = useMemo(
-        () => [
-            "As you were answering, one thing became very clear.",
-            "You seem to feel most at peace when there’s space. When no one is rushing you.\nWhen nothing is expected from you.",
-            "And that’s actually something really beautiful.",
-            "It often means you’re someone who listens deeply.",
-            "Someone who feels a lot.",
-            "Someone who gives more when things feel honest and calm.",
-            "There’s nothing wrong with needing space.",
-            "For many people, that’s exactly where they feel most like themselves.",
-            "This doesn’t mean you’re lost.",
-            "It usually means you’re in a moment where you’re becoming more aware of what truly matters to you.",
-        ],
-        []
-    );
-
+export function SequenceScreen({
+    onNext,
+    onBack,
+    icon,
+    headline,
+    bullets,
+    autoAdvanceDelay = 2500,
+    buttonText = "Continue"
+}: SequenceScreenProps) {
     const [index, setIndex] = useState(0);
 
-    // Optional: auto-advance every 2.5s (remove if you want only tap-to-advance)
+    // Auto-advance logic
     useEffect(() => {
         if (index >= bullets.length - 1) return;
-        const t = setTimeout(() => setIndex((i) => i + 1), 2500);
+        const t = setTimeout(() => setIndex((i) => i + 1), autoAdvanceDelay);
         return () => clearTimeout(t);
-    }, [index, bullets.length]);
+    }, [index, bullets.length, autoAdvanceDelay]);
 
     const isLast = index >= bullets.length - 1;
 
@@ -49,7 +46,6 @@ export function Screen18Yes({ onNext, onBack }: Screen18YesProps) {
                 whileTap={{ scale: 0.9 }}
                 onClick={onBack}
                 className="self-start mb-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md"
-                aria-label="Go back"
             >
                 <ArrowLeft className="w-5 h-5 text-gray-600" />
             </motion.button>
@@ -66,9 +62,9 @@ export function Screen18Yes({ onNext, onBack }: Screen18YesProps) {
                     transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
                     className="text-5xl mb-4"
                 >
-                    🌿
+                    {icon}
                 </motion.div>
-                <h1 className="mb-2">Something I noticed</h1>
+                <h1 className="mb-2">{headline}</h1>
                 <p className="text-gray-600">Tap to continue</p>
             </motion.div>
 
@@ -129,7 +125,7 @@ export function Screen18Yes({ onNext, onBack }: Screen18YesProps) {
                             : "bg-gray-200 text-gray-500 cursor-not-allowed",
                     ].join(" ")}
                 >
-                    Continue
+                    {buttonText}
                     <ArrowRight className="w-6 h-6" />
                 </motion.button>
             </div>
