@@ -261,8 +261,13 @@ export function JourneyScreen({ onNavigate }: JourneyScreenProps) {
                             </button>
 
                             {/* Text */}
-                            <div className={`flex-1 p-4 rounded-xl transition-colors ${item.status === 'active' ? 'bg-white shadow-md border border-green-100' : ''
-                                }`}>
+                            <div
+                                onClick={() => handleDayClick(item.day)}
+                                className={`flex-1 p-4 rounded-xl transition-colors ${item.status === 'active'
+                                        ? 'bg-white shadow-md border border-green-100 cursor-pointer'
+                                        : ''
+                                    }`}
+                            >
                                 <div className="flex items-center justify-between">
                                     <span className={`font-medium ${item.status === 'locked' ? 'text-gray-400' : 'text-gray-800'
                                         }`}>
