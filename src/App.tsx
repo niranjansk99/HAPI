@@ -34,6 +34,7 @@ export default function App() {
 
   const completeOnboarding = () => {
     setShowOnboarding(false);
+    setCurrentPage('journey');
   };
 
   if (showLanding) {
