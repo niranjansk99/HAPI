@@ -9,12 +9,18 @@ import { ReadyScreen } from './onboarding/ReadyScreen';
 import jumpingVideo from '../assets/Jumping-vmake.mov';
 import * as LucideIcons from 'lucide-react';
 
+import { Screen18Yes } from './onboarding/Screen18Yes';
+import { Screen18No } from './onboarding/Screen18No';
 interface OnboardingProps {
   onComplete: () => void;
 }
 
+
 export function Onboarding({ onComplete }: OnboardingProps) {
+
   const [currentStep, setCurrentStep] = useState(0);
+  const goToStep = (i: number) => setCurrentStep(i);
+
   const [userData, setUserData] = useState({
     goal: '',
     experience: '',
@@ -29,11 +35,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     identityStyle: "",
     checkInFeeling: "",
     mostTrueParts: "",
-    shareObservationConsent: false,
+    shareObservationConsent: null as null | boolean,
+    screen18Preference: "" as "" | "helpful" | "unsure" | "practical",
+
   });
 
   const updateUserData = (key: string, value: any) => {
-    setUserData(prev => ({ ...prev, [key]: value }));
+    setUserData((prev) => ({ ...prev, [key]: value }));
   };
 
   const nextStep = () => {
@@ -369,7 +377,6 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
     <SelectionScreen
       key="screen-17"
-      onNext={nextStep}
       onBack={prevStep}
       headline="Can I share something I noticed about you?"
       subline="You’re always free to say no."
@@ -380,6 +387,22 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       selectedValues={userData.shareObservationConsent ? "true" : "false"}
       onSelect={(val) => updateUserData('shareObservationConsent', val === "true")}
       topIcon="💬"
+      onNextYes={() => setCurrentStep((s) => s + 1)} // go to Screen18Yes
+      onNextNo={() => setCurrentStep((s) => s + 2)}  // skip Screen18Yes -> Screen18No
+    />,
+
+    <Screen18Yes
+      key="screen-18-yes"
+      onBack={prevStep}
+      onNext={() => setCurrentStep((s) => s + 2)} // skip Screen18No after YES
+    />,
+
+    <Screen18No
+      key="screen-18-no"
+      onBack={prevStep}
+      onNext={nextStep}
+      userData={userData}
+      updateUserData={updateUserData}
     />,
 
     <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
