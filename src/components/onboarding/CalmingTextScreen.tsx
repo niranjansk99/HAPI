@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import React from 'react';
 
 interface CalmingTextScreenProps {
     onNext: () => void;
     onBack?: () => void;
-    videoSrc: string;
+    videoSrc?: string;
+    videoSources?: {
+        mov: string;
+        webm: string;
+    };
     headline?: string;
     subtext: React.ReactNode;
     buttonText: string;
@@ -15,6 +19,7 @@ export function CalmingTextScreen({
     onNext,
     onBack,
     videoSrc,
+    videoSources,
     headline,
     subtext,
     buttonText
@@ -48,13 +53,20 @@ export function CalmingTextScreen({
                 >
                     <div className="w-60 h-60">
                         <video
-                            src={videoSrc}
                             autoPlay
                             loop
                             muted
                             playsInline
                             className="w-full h-full pointer-events-none"
-                        />
+                            {...(!videoSources ? { src: videoSrc } : {})}
+                        >
+                            {videoSources && (
+                                <>
+                                    <source src={videoSources.mov} type="video/quicktime" />
+                                    <source src={videoSources.webm} type="video/webm" />
+                                </>
+                            )}
+                        </video>
                     </div>
                 </motion.div>
 
