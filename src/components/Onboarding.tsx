@@ -4,7 +4,7 @@ import { GoalScreen } from './onboarding/GoalScreen';
 import { ExperienceScreen } from './onboarding/ExperienceScreen';
 import { DailyGoalScreen } from './onboarding/DailyGoalScreen';
 //import { ReminderScreen } from './onboarding/ReminderScreen';
-//import { ReadyScreen } from './onboarding/ReadyScreen';
+import { ReadyScreen } from './onboarding/ReadyScreen';
 import { MoodScreen } from "./onboarding/MoodScreen";
 
 interface OnboardingProps {
@@ -44,9 +44,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <GoalScreen key="goal" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <ExperienceScreen key="experience" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     <DailyGoalScreen key="daily" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
-    <MoodScreen key="mood" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />, // ✅ added
+    <MoodScreen key="mood" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
     //<ReminderScreen key="reminder" onNext={nextStep} onBack={prevStep} userData={userData} updateUserData={updateUserData} />,
-    //<ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
+    <ReadyScreen key="ready" onNext={nextStep} onBack={prevStep} />
   ];
 
   return (
