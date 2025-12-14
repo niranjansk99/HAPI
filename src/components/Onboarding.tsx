@@ -6,7 +6,7 @@ import { InformationScreen } from './onboarding/InformationScreen';
 import { InputScreen } from './onboarding/InputScreen';
 import { SequenceScreen } from './onboarding/SequenceScreen';
 import { ReadyScreen } from './onboarding/ReadyScreen';
-import jumpingVideo from '../assets/Jumping-vmake.mov';
+import jumpingVideo from '../assets/Jumping-vmake.webm';
 import * as LucideIcons from 'lucide-react';
 
 interface OnboardingProps {
