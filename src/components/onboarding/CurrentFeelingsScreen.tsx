@@ -1,47 +1,49 @@
 import { motion } from "framer-motion";
 ;
-import { ArrowRight, ArrowLeft, Coffee, Zap, Flame, Rocket } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Coffee, CloudLightning, Waves, BatteryLow, HelpCircle } from 'lucide-react';
 
-interface DailyGoalScreenProps {
+interface CurrentFeelingsScreenProps {
   onNext: () => void;
   onBack: () => void;
   userData: any;
   updateUserData: (key: string, value: string) => void;
 }
 
-export function DailyGoalScreen({ onNext, onBack, userData, updateUserData }: DailyGoalScreenProps) {
+export function CurrentFeelingsScreen({ onNext, onBack, userData, updateUserData }: CurrentFeelingsScreenProps) {
   const goals = [
-    { 
-      id: 'casual', 
-      label: 'Casual', 
-      minutes: 5,
-      desc: 'Just a few minutes',
+    {
+      id: 'Calm',
+      label: 'Calm',
+      desc: 'Your mind is clear.',
       icon: Coffee,
-      color: 'from-green-400 to-emerald-500'
+      color: 'from-amber-300 to-yellow-400'
     },
-    { 
-      id: 'regular', 
-      label: 'Regular', 
-      minutes: 10,
-      desc: 'Keep it balanced',
-      icon: Zap,
+    {
+      id: 'Stressed',
+      label: 'Stressed',
+      desc: 'Lets bring back some balance.',
+      icon: CloudLightning,
       color: 'from-blue-400 to-cyan-500',
-      recommended: true
     },
-    { 
-      id: 'serious', 
-      label: 'Serious', 
-      minutes: 15,
-      desc: 'Really committed',
-      icon: Flame,
+    {
+      id: 'Overwhelmed',
+      label: 'Overwhelmed',
+      desc: 'Sometimes its all too much - lets start small.',
+      icon: Waves,
       color: 'from-orange-400 to-red-500'
     },
-    { 
-      id: 'intense', 
-      label: 'Intense', 
-      minutes: 20,
-      desc: 'Go all in!',
-      icon: Rocket,
+    {
+      id: 'Empty',
+      label: 'Empty',
+      desc: 'Lets see how we can charge you up again.',
+      icon: BatteryLow,
+      color: 'from-indigo-300 to-purple-300'
+    },
+    {
+      id: 'Unsure',
+      label: 'Unsure',
+      desc: 'No worries - we will figure it out together!',
+      icon: HelpCircle,
       color: 'from-purple-400 to-pink-500'
     }
   ];
@@ -69,21 +71,21 @@ export function DailyGoalScreen({ onNext, onBack, userData, updateUserData }: Da
         transition={{ delay: 0.2 }}
         className="text-center mb-8"
       >
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             scale: [1, 1.2, 1],
           }}
-          transition={{ 
+          transition={{
             duration: 1.5,
             repeat: Infinity,
             repeatDelay: 1
           }}
           className="text-5xl mb-4"
         >
-          ⏰
+          ✨
         </motion.div>
-        <h1 className="mb-3">Set your daily goal</h1>
-        <p className="text-gray-600">How much time per day?</p>
+        <h1 className="mb-3">How are you feeling right now?</h1>
+        <p className="text-gray-600">Don't overthink it - just follow you first intention</p>
       </motion.div>
 
       <div className="flex-1 max-w-md mx-auto w-full">
@@ -97,45 +99,25 @@ export function DailyGoalScreen({ onNext, onBack, userData, updateUserData }: Da
               whileHover={{ scale: 1.03, x: 5 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => handleSelect(goal.id)}
-              className={`relative w-full rounded-3xl p-5 shadow-lg transition-all flex items-center gap-4 ${
-                userData.dailyGoal === goal.id
-                  ? `bg-gradient-to-r ${goal.color} ring-4 ring-green-400`
-                  : 'bg-white'
-              }`}
+              className={`relative w-full rounded-3xl p-5 shadow-lg transition-all flex items-center gap-4 ${userData.dailyGoal === goal.id
+                ? `bg-gradient-to-r ${goal.color} ring-4 ring-green-400`
+                : 'bg-white'
+                }`}
             >
-              {goal.recommended && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute -top-3 right-4 bg-yellow-400 text-yellow-900 text-xs px-3 py-1 rounded-full shadow-md"
-                >
-                  ⭐ Recommended
-                </motion.div>
-              )}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
-                userData.dailyGoal === goal.id ? 'bg-white/20' : 'bg-gray-100'
-              }`}>
-                <goal.icon className={`w-7 h-7 ${
-                  userData.dailyGoal === goal.id ? 'text-white' : 'text-gray-600'
-                }`} />
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${userData.dailyGoal === goal.id ? 'bg-white/20' : 'bg-gray-100'
+                }`}>
+                <goal.icon className={`w-7 h-7 ${userData.dailyGoal === goal.id ? 'text-white' : 'text-gray-600'
+                  }`} />
               </div>
               <div className="flex-1 text-left">
-                <div className={`mb-1 ${
-                  userData.dailyGoal === goal.id ? 'text-white' : 'text-gray-800'
-                }`}>
+                <div className={`mb-1 ${userData.dailyGoal === goal.id ? 'text-white' : 'text-gray-800'
+                  }`}>
                   {goal.label}
                 </div>
-                <div className={`text-sm ${
-                  userData.dailyGoal === goal.id ? 'text-white/80' : 'text-gray-500'
-                }`}>
+                <div className={`text-sm ${userData.dailyGoal === goal.id ? 'text-white/80' : 'text-gray-500'
+                  }`}>
                   {goal.desc}
                 </div>
-              </div>
-              <div className={`text-right ${
-                userData.dailyGoal === goal.id ? 'text-white' : 'text-gray-600'
-              }`}>
-                <div className="text-2xl">{goal.minutes}</div>
-                <div className="text-xs">min/day</div>
               </div>
             </motion.button>
           ))}
