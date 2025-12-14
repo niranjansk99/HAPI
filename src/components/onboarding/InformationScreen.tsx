@@ -4,7 +4,11 @@ import React from "react";
 
 interface InformationScreenProps {
     onNext: () => void;
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
+    videoSources?: {
+        mov: string;
+        webm: string;
+    };
     headline: string;
     subline?: string;
     buttonText?: string;
@@ -13,6 +17,7 @@ interface InformationScreenProps {
 export function InformationScreen({
     onNext,
     icon,
+    videoSources,
     headline,
     subline,
     buttonText = "Continue"
@@ -21,14 +26,31 @@ export function InformationScreen({
         <div className="min-h-screen flex flex-col px-6 py-12">
             {/* Spacer to center content vertically */}
             <div className="flex-1 flex flex-col items-center justify-center text-center">
-                {/* Gentle animated icon */}
+                {/* Visual: Video or Icon */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4 }}
-                    className="text-5xl mb-6"
+                    className="mb-8"
                 >
-                    {icon}
+                    {videoSources ? (
+                        <div className="w-60 h-60 mx-auto">
+                            <video
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="w-full h-full pointer-events-none"
+                            >
+                                <source src={videoSources.mov} type="video/quicktime" />
+                                <source src={videoSources.webm} type="video/webm" />
+                            </video>
+                        </div>
+                    ) : (
+                        <div className="text-5xl">
+                            {icon}
+                        </div>
+                    )}
                 </motion.div>
 
                 {/* Text */}

@@ -5,7 +5,11 @@ import React, { useEffect, useState } from "react";
 interface SequenceScreenProps {
     onNext: () => void;
     onBack: () => void;
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
+    videoSources?: {
+        mov: string;
+        webm: string;
+    };
     headline: string;
     bullets: string[];
     autoAdvanceDelay?: number;
@@ -16,6 +20,7 @@ export function SequenceScreen({
     onNext,
     onBack,
     icon,
+    videoSources,
     headline,
     bullets,
     autoAdvanceDelay = 2500,
@@ -57,13 +62,34 @@ export function SequenceScreen({
                 transition={{ delay: 0.15 }}
                 className="text-center mb-8"
             >
-                <motion.div
-                    animate={{ y: [0, -6, 0] }}
-                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                    className="text-5xl mb-4"
-                >
-                    {icon}
-                </motion.div>
+                {videoSources ? (
+                    <motion.div
+                        className="mb-8"
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                    >
+                        <div className="w-60 h-60 mx-auto">
+                            <video
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="w-full h-full pointer-events-none"
+                            >
+                                <source src={videoSources.mov} type="video/quicktime" />
+                                <source src={videoSources.webm} type="video/webm" />
+                            </video>
+                        </div>
+                    </motion.div>
+                ) : icon && (
+                    <motion.div
+                        animate={{ y: [0, -6, 0] }}
+                        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                        className="text-5xl mb-4"
+                    >
+                        {icon}
+                    </motion.div>
+                )}
                 <h1 className="mb-2">{headline}</h1>
                 <p className="text-gray-600">Tap to continue</p>
             </motion.div>

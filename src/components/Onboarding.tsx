@@ -219,6 +219,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     "Giving something to others",
     "Having direction, even if small",
     "I’m not sure yet",
+    "I’m not sure yet",
   ].map(opt => ({
     id: opt,
     label: opt,
@@ -297,6 +298,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       options={feelingsOptions}
       selectedValues={userData.dailyGoal}
       onSelect={(val) => updateUserData('dailyGoal', val)}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       topIcon="✨"
     />,
     // 4
@@ -313,6 +315,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
         userData.tooMuchToday === 'yes_definitely' ? '😮‍💨' :
           userData.tooMuchToday === 'a_bit' ? '😵‍💫' : '🙂'
       }
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 5
     <InformationScreen
@@ -321,6 +324,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       icon="🌱"
       headline="Thanks for telling me."
       subline="You don’t need to solve anything today."
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 6
     <InputScreen
@@ -348,6 +352,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       options={momentFeelGoodOptions}
       selectedValues={userData.momentFeelGoodReason}
       onSelect={(val) => updateUserData('momentFeelGoodReason', val)}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       topIcon="✨"
     />,
     // 8
@@ -356,6 +361,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       onNext={nextStep}
       icon="🌱"
       headline="You don’t need perfect answers. Patterns matter more than clarity"
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 9
     <SelectionScreen
@@ -367,6 +373,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       options={worldValueOptions}
       selectedValues={userData.worldValue}
       onSelect={(val) => updateUserData('worldValue', val)}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       topIcon="✨"
     />,
     // 10
@@ -379,14 +386,16 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       options={identityStyleOptions}
       selectedValues={userData.identityStyle}
       onSelect={(val) => updateUserData('identityStyle', val)}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       topIcon="✨"
     />,
     // 11
     <InformationScreen
       key="screen-13"
       onNext={nextStep}
-      icon="🌱"
+      //icon="🌱"
       headline="Many people find their direction by listening, not forcing."
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 12
     <SelectionScreen
@@ -398,7 +407,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       options={checkInFeelingOptions}
       selectedValues={userData.checkInFeeling}
       onSelect={(val) => updateUserData('checkInFeeling', val)}
-      topIcon="💭"
+      //topIcon="💭"
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 13
     <SelectionScreen
@@ -410,14 +420,16 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       options={mostTruePartsOptions}
       selectedValues={userData.mostTrueParts}
       onSelect={(val) => updateUserData('mostTrueParts', val)}
-      topIcon="🧭"
+      //topIcon="🧭"
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 14
     <InformationScreen
       key="screen-16"
       onNext={nextStep}
-      icon="🌱"
+      //icon="🌱"
       headline="You don’t need clarity to move forward. You only need honesty — and you’re already doing that."
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 15 (Branching Point - Screen 17)
     <SelectionScreen
@@ -432,16 +444,18 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       ]}
       selectedValues={userData.shareObservationConsent ? "true" : "false"}
       onSelect={(val) => updateUserData('shareObservationConsent', val === "true")}
-      topIcon="💬"
+      //topIcon="💬"
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 16 (Yes Path - Screen 18 Yes)
     <SequenceScreen
       key="screen-18-yes"
       onNext={nextStep}
       onBack={prevStep}
-      icon="🌿"
+      //icon="🌿"
       headline="Something I noticed"
       bullets={screen18YesBullets}
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
     // 17 (No Path - Screen 19)
     <SelectionScreen
@@ -453,23 +467,26 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       options={screen18NoOptions}
       selectedValues={userData.screen18Preference}
       onSelect={(val) => updateUserData("screen18Preference", val)}
-      topIcon="🧭"
+      //topIcon="🧭"
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
 
     // 18 (Screen 20 - Merged)
     <InformationScreen
       key="screen-20"
       onNext={nextStep}
-      icon="🧭"
+      //icon="🧭"
       headline="Most people don’t have one single purpose. They have a direction — a range where things feel right."
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
     />,
 
     // 19 (Screen 24)
     <InformationScreen
       key="screen-24"
       onNext={nextStep}
-      icon="👣"
+      //icon="👣"
       headline="This is not about finding answers. It’s about trying things."
+      videoSources={{ mov: jumpingVideoMov, webm: jumpingVideoWebm }}
       subline="Small actions create clarity. You don’t need motivation — just one step."
     />,
 
